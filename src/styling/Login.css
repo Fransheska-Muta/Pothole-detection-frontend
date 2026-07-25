@@ -11,20 +11,18 @@
 }
 
 .login-left{
-    flex:1;
+    width:100%;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
     background:white;
-    padding:40px;
 }
 
 .login-left h1{
     font-size:45px;
     font-weight:bold;
     color:black;
-    margin-bottom:20px;
 }
 
 .login-left form{
@@ -40,7 +38,9 @@
 
 .login-left input{
     height:45px;
+    background:white;
     border:2px solid black;
+    color:black;
     border-radius:30px;
     padding-left:20px;
     font-size:16px;
@@ -72,10 +72,11 @@
     color:#7016A3;
     cursor:pointer;
     font-weight:bold;
+    margin-left:5px;
 }
 
 .login-right{
-    flex:1;
+    width:50%;
     background:#5D1578;
     position:relative;
     display:flex;
@@ -110,122 +111,153 @@
     right:-40px;
     bottom:-40px;
 }
-@media screen and (max-width: 1024px) {
- .login-left h1{
-  font-size:38px;
+
+/* ===========================
+   Tablet
+=========================== */
+
+@media screen and (max-width:1024px){
+
+    .login-left h1{
+        font-size:38px;
+    }
+
+    .login-left form{
+        width:280px;
+    }
+
+    .login-right h2{
+        font-size:42px;
+    }
+
+    .top{
+        width:200px;
+        height:200px;
+    }
+
+    .bottom{
+        width:150px;
+        height:150px;
+    }
+
 }
-  .login-left form{
-   width:280px;
-}
-  .login-right h2{
-   font-size:42px;
-}
-  .top{
-  width: 200px;
-  height:200px;
-}
-  .bottom{
-   width:150px;
-   height:150px;
-}
-}
+
+/* ===========================
+   Mobile
+=========================== */
 
 @media screen and (max-width:768px){
- .login-container{
-  flex-direction:column;
-  height:auto;
-  /* min-height:100vh; */
-}
-  .login-right{
-    /* display: grid; */
-   width:100%;
-   height:220px;
-   order:-1;
-}
-  .login-left{
-   width:100%;
-   padding:40px 20px;
-}
-  .login-left h1{
-   font-size:34px;
-   margin-bottom:25px;
-   text-align:center;
-}
-  .login-left form{
-   width:100%;
-   max-width:350px;
-}
-  .login-left input{
-   height:42px;
-   font-size:15px;
-}
-  .login-left button{
-   height:42px;
-   font-size:16px;
-}
-  .login-right h2{
-   font-size:36px;
-}
-  .top{
-   width:170px;
-   height:170px;
-   top:-50px;
-   left:-50px;
-}
-  .bottom{
-   width:130px;
-   height:130px;
-   right:-35px;
-   bottom:-35px;
-}
-}
-@media (max-width:480px){
-  .login-left{
-   padding:30px 15px;
-        
-}
-  .login-left h1{
-   font-size:28px;
-        
-}
-  .login-left form{
-   max-width:100%;
-        
-}
-  .login-left input{
-   height:40px;
-   font-size:14px;
-   padding-left:15px;
-        
-}
-  .login-left button{
-   height:40px;
-   font-size:15px;
+
+    .login-container{
+        flex-direction:column;
+        height:auto;
+    }
+
+    .login-right{
+        width:100%;
+        height:220px;
+        order:-1;
+    }
+
+    .login-left{
+        width:100%;
+        padding:40px 20px;
+    }
+
+    .login-left h1{
+        font-size:34px;
+        margin-bottom:25px;
+        text-align:center;
+    }
+
+    .login-left form{
+        width:100%;
+        max-width:350px;
+    }
+
+    .login-left input{
+        height:42px;
+        font-size:15px;
+    }
+
+    .login-left button{
+        height:42px;
+        font-size:16px;
+    }
+
+    .login-right h2{
+        font-size:36px;
+    }
+
+    .top{
+        width:170px;
+        height:170px;
+        top:-50px;
+        left:-50px;
+    }
+
+    .bottom{
+        width:130px;
+        height:130px;
+        right:-35px;
+        bottom:-35px;
+    }
+
 }
 
-  .login-left label{
-   font-size:14px;
-}
+/* ===========================
+   Small Phones
+=========================== */
 
-  .login-left p{
-   font-size:14px;
-}
+@media screen and (max-width:480px){
 
-  .login-right{
-   height:180px;
-}
+    .login-left{
+        padding:30px 15px;
+    }
 
-  .login-right h2{
-   font-size:28px;
-}
+    .login-left h1{
+        font-size:28px;
+    }
 
-  .top{
-   width:140px;
-   height:140px;
-}
+    .login-left form{
+        max-width:100%;
+    }
 
-  .bottom{
-   width:110px;
-   height:110px;
-}
+    .login-left input{
+        height:40px;
+        font-size:14px;
+        padding-left:15px;
+    }
+
+    .login-left button{
+        height:40px;
+        font-size:15px;
+    }
+
+    .login-left label{
+        font-size:14px;
+    }
+
+    .login-left p{
+        font-size:14px;
+    }
+
+    .login-right{
+        height:180px;
+    }
+
+    .login-right h2{
+        font-size:28px;
+    }
+
+    .top{
+        width:140px;
+        height:140px;
+    }
+
+    .bottom{
+        width:110px;
+        height:110px;
+    }
+
 }

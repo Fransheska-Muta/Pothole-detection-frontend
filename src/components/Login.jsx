@@ -29,27 +29,28 @@ function Login({ showSignup }) {
     }
     return (
         <>
-        <div className="login-container">
-            <div className="login-left">
-                <div className="circle top"></div>
-                <div className="circle bottom"></div>
-                <h2> Welcome <br/> Back
-                </h2>
-            </div>
-            <div className="login-right">
-                <h1>LOGIN</h1>
-                <form onSubmit={handleLogin}>
-                    <label>Email</label>
-                    <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-                    <label>Password</label>
-                    <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
-                    <button type="submit"> Login </button>
-                    <p> Don't have an account?<span onClick={showSignup}> Sign Up </span> </p>
-                </form>
-            </div>
-        </div>
+       <div className="login-container">
+    <div className="login-left">
+        <h1>LOGIN</h1>
+        <form onSubmit={handleLogin}>
+            <label>Email</label>
+            <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
+
+            <label>Password</label>
+            <input type="password" value={password} onChange={(event) => setPassword(event.target.value)}/>
+            <button type="submit">Login</button>
+            <p> Don't have an account? <span onClick={showSignup}> Sign Up</span> </p>
+        </form>
+    </div>
+
+    <div className="login-right">
+        <div className="circle top"></div>
+        <h2> Welcome<br/>Back </h2>
+        <div className="circle bottom"></div>
+    </div>
+ </div>
     </>
-    );
+);
 }
 
 export default Login;
