@@ -1,0 +1,231 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Poppins,sans-serif;
+}
+
+.login-container{
+    display:flex;
+    height:100vh;
+}
+
+.login-left{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:white;
+    padding:40px;
+}
+
+.login-left h1{
+    font-size:45px;
+    font-weight:bold;
+    color:black;
+    margin-bottom:20px;
+}
+
+.login-left form{
+    display:grid;
+    width:320px;
+}
+
+.login-left label{
+    margin-top:10px;
+    margin-bottom:6px;
+    color:black;
+}
+
+.login-left input{
+    height:45px;
+    border:2px solid black;
+    border-radius:30px;
+    padding-left:20px;
+    font-size:16px;
+    outline:none;
+}
+
+.login-left button{
+    margin-top:35px;
+    height:45px;
+    border:none;
+    border-radius:30px;
+    background:#7016A3;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.login-left button:hover{
+    background:#4f0f74;
+}
+
+.login-left p{
+    margin-top:20px;
+    text-align:center;
+}
+
+.login-left span{
+    color:#7016A3;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.login-right{
+    flex:1;
+    background:#5D1578;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+.login-right h2{
+    color:white;
+    font-size:55px;
+    text-align:center;
+    z-index:1;
+}
+
+.circle{
+    position:absolute;
+    border-radius:50%;
+    background:radial-gradient(circle,#d857ff,#5D1578);
+}
+
+.top{
+    width:250px;
+    height:250px;
+    top:-60px;
+    left:-60px;
+}
+
+.bottom{
+    width:180px;
+    height:180px;
+    right:-40px;
+    bottom:-40px;
+}
+@media screen and (max-width: 1024px) {
+ .login-left h1{
+  font-size:38px;
+}
+  .login-left form{
+   width:280px;
+}
+  .login-right h2{
+   font-size:42px;
+}
+  .top{
+  width: 200px;
+  height:200px;
+}
+  .bottom{
+   width:150px;
+   height:150px;
+}
+}
+
+@media screen and (max-width:768px){
+ .login-container{
+  flex-direction:column;
+  height:auto;
+  /* min-height:100vh; */
+}
+  .login-right{
+    /* display: grid; */
+   width:100%;
+   height:220px;
+   order:-1;
+}
+  .login-left{
+   width:100%;
+   padding:40px 20px;
+}
+  .login-left h1{
+   font-size:34px;
+   margin-bottom:25px;
+   text-align:center;
+}
+  .login-left form{
+   width:100%;
+   max-width:350px;
+}
+  .login-left input{
+   height:42px;
+   font-size:15px;
+}
+  .login-left button{
+   height:42px;
+   font-size:16px;
+}
+  .login-right h2{
+   font-size:36px;
+}
+  .top{
+   width:170px;
+   height:170px;
+   top:-50px;
+   left:-50px;
+}
+  .bottom{
+   width:130px;
+   height:130px;
+   right:-35px;
+   bottom:-35px;
+}
+}
+@media (max-width:480px){
+  .login-left{
+   padding:30px 15px;
+        
+}
+  .login-left h1{
+   font-size:28px;
+        
+}
+  .login-left form{
+   max-width:100%;
+        
+}
+  .login-left input{
+   height:40px;
+   font-size:14px;
+   padding-left:15px;
+        
+}
+  .login-left button{
+   height:40px;
+   font-size:15px;
+}
+
+  .login-left label{
+   font-size:14px;
+}
+
+  .login-left p{
+   font-size:14px;
+}
+
+  .login-right{
+   height:180px;
+}
+
+  .login-right h2{
+   font-size:28px;
+}
+
+  .top{
+   width:140px;
+   height:140px;
+}
+
+  .bottom{
+   width:110px;
+   height:110px;
+}
+}
