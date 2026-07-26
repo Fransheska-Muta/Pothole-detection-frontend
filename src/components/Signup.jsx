@@ -3,44 +3,35 @@ import "../styling/Signup.css";
 
 function Signup({ showLogin }) {
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-    const handleSignup = async (event) => {
-        event.preventDefault();
-        try {
-            const response = await fetch("http://localhost:3000/signup", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    name,
-                    email,
-                    password,
-                    confirmPassword,
-                }),
-            });
-            const data = await response.json();
-            if (response.ok) {
-                alert("Account created successfully!");
-
-                //resets the form to nothing in it
-                setName("");
-                setEmail("");
-                setPassword("");
-                setConfirmPassword("");
-                showLogin();
-            } else {
-                alert(data.message);
-            }
-        } catch (error) {
-            console.error(error);
-            alert("Unable to connect to the server.");
-        }
-    };
+  const handleSignup = async (event) => {
+    event.preventDefault();
+     try {
+        const response = await fetch("http://localhost:3000/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+    },
+      body: JSON.stringify({name,email,password,confirmPassword,}),
+    });
+      const data = await response.json();
+        if (response.ok) {
+            alert("Account created successfully!");
+            
+            //resets the form to nothing in it
+        setName(""); setEmail(""); setPassword(""); setConfirmPassword(""); showLogin();
+    }else {
+      alert(data.message);
+    }
+    }catch(error){
+       console.error(error);
+       alert("Unable to connect to the server.");
+    }
+};
      return (
         <>
         <div className="signup-container">
