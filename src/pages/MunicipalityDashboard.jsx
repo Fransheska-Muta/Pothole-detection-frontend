@@ -6,4 +6,4 @@ function MunicipalityDashboard() {
     );
 }
 
-export default MunicipalityDashboard;
+export default MunicipalityDashboard

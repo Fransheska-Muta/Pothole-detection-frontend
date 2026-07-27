@@ -12,4 +12,4 @@ function ProtectedRoute({ children, role }) {
     )
 }
 
-export default ProtectedRoute;
+export default ProtectedRoute

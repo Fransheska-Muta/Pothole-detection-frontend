@@ -60,4 +60,4 @@ function Login({ showSignup }) {
 );
 }
 
-export default Login;
+export default Login

@@ -6,16 +6,12 @@ function AuthPage() {
  const [showSignup, setShowSignup] = useState(true);
  return (
     <>
-       {showSignup ? (
-         <Signup
-            showLogin={() => setShowSignup(false)}/>): 
-            (<Login
-             showSignup={() => setShowSignup(true)}
-            />
-    )}
-
+      {showSignup ? (
+         <Signup showLogin={() => setShowSignup(false)}/>): (
+         <Login showSignup={() => setShowSignup(true)}/>)
+      }
     </>
 );
 }
 
-export default AuthPage;
+export default AuthPage
