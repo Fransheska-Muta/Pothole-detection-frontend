@@ -4,12 +4,14 @@ import UserDashboard from "./pages/UserDashboard";
 import MunicipalityDashboard from "./pages/MunicipalityDashboard";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes>|
         <Route path="/" element={<AuthPage/>}/>
+        <Route path="*" element={<PageNotFound />} />
         <Route path="/user" element={
           <ProtectedRoute role="user">
             <UserDashboard />
