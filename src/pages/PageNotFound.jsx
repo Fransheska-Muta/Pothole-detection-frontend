@@ -1,10 +1,19 @@
-// import React from 'react';
+import { useNavigate } from 'react-router-dom'
+import '../styling/PageNotFound.css'
 
 function PageNotFound () {
-    
+ const navigate = useNavigate();
+
     return(
         <>
-           <h2> What are you doing here </h2>
+          <div className="whole-thing">
+            <h1>404</h1>
+            <h2 className="four"> Oh My Potholes! What are you doing here </h2>
+          </div>
+
+          <div className="redirect">
+             <button className="button" onClick={() => navigate(-1)}>Go back </button>
+          </div>
         </>
     )
 }

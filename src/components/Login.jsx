@@ -18,7 +18,7 @@ function Login({ showSignup }) {
         const data = await response.json();
           if (response.ok) {
            localStorage.setItem("user", JSON.stringify(data)); 
-        alert("Login Successful!");
+        alert("Welcome Back!")
         if(data.role === "user"){
             navigate("/user")
         }else if(data.role === "municipality"){
@@ -52,7 +52,7 @@ function Login({ showSignup }) {
 
     <div className="login-right">
         <div className="circle top"></div>
-        <h2> Welcome<br/>Back </h2>
+        <h2> Welcome <br/>Back </h2>
         <div className="circle bottom"></div>
     </div>
  </div>

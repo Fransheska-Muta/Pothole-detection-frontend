@@ -9,7 +9,7 @@ import PageNotFound from "./pages/PageNotFound";
 function App() {
   return (
     <BrowserRouter>
-      <Routes>|
+      <Routes>
         <Route path="/" element={<AuthPage/>}/>
         <Route path="*" element={<PageNotFound />} />
         <Route path="/user" element={

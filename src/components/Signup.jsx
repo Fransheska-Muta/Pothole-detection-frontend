@@ -57,7 +57,7 @@ function Signup({ showLogin }) {
             <div className="signup-right">
                 <div className="circle top"></div>
                 <div className="circle bottom"></div>
-                <h2> Hey <br/> Welcome</h2>
+                <h2> Hey, <br/> Welcome</h2>
             </div>
         </div>
 </>
