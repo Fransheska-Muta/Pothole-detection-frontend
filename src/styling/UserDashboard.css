@@ -1,0 +1,26 @@
+.dashboard{
+    font-size: 50px;
+    color: black;
+    /* height: 100vh; */
+    /* background-color: rgb(107, 10, 187); */
+}
+
+body{
+    background-color: rgb(107, 10, 187);
+}
+
+.logout-btn{
+    /* border: 2px solid red; */
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:white;
+    color:#5D1578;
+    font-weight:bold;
+}
+
+.logout-btn:hover{
+    background:#ececec;
+}
+

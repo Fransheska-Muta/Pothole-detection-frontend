@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
 import "../styling/Login.css";
 
 function Login({ showSignup }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();  
+   const {login} = useAuth();
   const handleLogin = async (event) => {
     event.preventDefault();
      try {
@@ -17,7 +19,7 @@ function Login({ showSignup }) {
     }});
         const data = await response.json();
           if (response.ok) {
-           localStorage.setItem("user", JSON.stringify(data)); 
+           login(data); 
         alert("Welcome Back!")
         if(data.role === "user"){
             navigate("/user")
