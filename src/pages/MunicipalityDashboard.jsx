@@ -1,7 +1,10 @@
+import Navbar from "../components/Navbar"
+
 function MunicipalityDashboard() {
     return (
         <>
-            <h1>Municipality Dashboard</h1>
+          <Navbar />
+            <h1 style={{color: "black"}}>Municipality Dashboard</h1>
         </>
     );
 }
