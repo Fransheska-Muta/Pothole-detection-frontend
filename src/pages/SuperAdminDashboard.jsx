@@ -63,6 +63,62 @@ const handlePromote = async () => {
 
         alert("Unable to promote user.");
     }
+}
+const handleDemote = async (email) => {
+
+    const confirmDemote = window.confirm(
+        `Are you sure you want to demote ${email}?`
+    );
+
+    if (!confirmDemote) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:3000/users/demote",
+            {
+                method: "PUT",
+
+                headers: {
+                    Authorization: `Bearer ${user.token}`,
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    email: email
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        console.log("Demotion response:", data);
+
+        if (!response.ok) {
+            alert(data.message);
+            return;
+        }
+
+        // Remove the demoted user from the table
+        setUsers((currentUsers) =>
+            currentUsers.filter(
+                (currentUser) => currentUser.email !== email
+            )
+        );
+
+        alert("User demoted successfully!");
+
+    } catch (error) {
+
+        console.error(
+            "Demotion error:",
+            error
+        );
+
+        alert("Unable to demote user.");
+    }
 };
 
 return (
@@ -78,6 +134,7 @@ return (
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
@@ -87,6 +144,7 @@ return (
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.role}</td>
+                            <td><button className="demote-button" onClick={()=> handleDemote(user.email)}>Remove Role</button></td>
                         </tr>
                     ))}
                 </tbody>

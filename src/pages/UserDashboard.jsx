@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import '../styling/UserDashboard.css';
+import Navbar from "../components/Navbar"
 
 function UserDashboard() {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ function UserDashboard() {
 
     return (
         <>
+        <Navbar />
             <h1 className="dashboard">User Dashboard</h1>
             <button className="logout-btn" onClick={logout}>
               Logout

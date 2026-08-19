@@ -23,6 +23,16 @@
     margin-bottom: 30px;
 }
 
+.demote-button {
+    background-color: #7016A3;;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
 /* logout button*/
 .superadmin-container > button {
     background: #7016A3;
