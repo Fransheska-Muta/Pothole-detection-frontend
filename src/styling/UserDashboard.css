@@ -1,26 +1,302 @@
-.dashboard{
-    font-size: 50px;
-    color: black;
-    /* height: 100vh; */
-    /* background-color: rgb(107, 10, 187); */
+/* =========================
+   USER DASHBOARD
+========================= */
+
+.user-dashboard {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 20px 55px;
+
+    box-sizing: border-box;
 }
 
-body{
-    background-color: rgb(107, 10, 187);
+
+/* =========================
+   TOP BAR
+========================= */
+
+.dashboard-top {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 10px;
 }
 
-.logout-btn{
-    /* border: 2px solid red; */
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    background:white;
-    color:#5D1578;
-    font-weight:bold;
+
+/* =========================
+   LOCATION SEARCH
+========================= */
+
+.location-search {
+    width: 65%;
+
+    height: 50px;
+
+    border: 3px solid black;
+
+    border-radius: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
 }
 
-.logout-btn:hover{
-    background:#ececec;
+
+.location-icon {
+    font-size: 28px;
+
+    margin-right: 8px;
 }
 
+
+.location-search input {
+    flex: 1;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 25px;
+
+    background: transparent;
+}
+
+
+.search-button {
+    border: none;
+
+    background: transparent;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+.location-button {
+    border: none;
+    background: transparent;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    margin-right: 8px;
+}
+
+
+.coordinates {
+    font-size: 14px;
+
+    margin-top: 10px;
+}
+
+
+/* =========================
+   PROFILE BUTTON
+========================= */
+
+.profile-button {
+    width: 55px;
+
+    height: 55px;
+
+    border-radius: 50%;
+
+    background-color: #661477;
+
+    border: 3px solid black;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.profile-button span {
+    color: white;
+
+    font-size: 35px;
+}
+
+
+/* =========================
+   MAP
+========================= */
+
+.map-container {
+    width: 65%;
+
+    height: 300px;
+
+    margin-top: 10px;
+
+    overflow: hidden;
+}
+
+
+.map-placeholder {
+    width: 100%;
+
+    height: 100%;
+
+    background-image: url("https://tile.openstreetmap.org/10/601/384.png");
+
+    background-size: cover;
+
+    background-position: center;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.map-pin {
+    font-size: 100px;
+
+    filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.4));
+}
+
+
+/* =========================
+   POTHOLE DETECTION
+========================= */
+
+.detection-section {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 10px;
+
+    margin-left: 35px;
+}
+
+
+.warning-icon {
+    font-size: 35px;
+}
+
+
+.detection-message {
+    background-color: #ffc94f;
+
+    border: 3px solid black;
+
+    border-radius: 30px;
+
+    padding: 10px 25px;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   REPORT SECTION
+========================= */
+
+.report-section {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 10px;
+
+    margin-left: 35px;
+}
+
+
+.camera-icon {
+    font-size: 35px;
+}
+
+
+.report-pothole-button {
+    width: 220px;
+
+    height: 45px;
+
+    background-color: #08aa4b;
+
+    color: white;
+
+    border: 3px solid black;
+
+    border-radius: 30px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.report-pothole-button:hover {
+    background-color: #078e40;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .user-dashboard {
+        padding: 20px;
+    }
+
+    .location-search {
+        width: 80%;
+    }
+
+    .map-container {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .dashboard-top {
+        gap: 10px;
+    }
+
+    .location-search {
+        width: 85%;
+    }
+
+    .location-search input {
+        font-size: 18px;
+    }
+
+    .profile-button {
+        width: 45px;
+        height: 45px;
+    }
+
+    .detection-section,
+    .report-section {
+        margin-left: 0;
+    }
+
+}
