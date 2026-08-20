@@ -1,269 +1,155 @@
-/* =========================
-   PROFILE MODAL
-========================= */
-
+.dashboard-content{
+    margin: 0;
+    padding: 0;
+}
 .profile-modal-overlay {
     position: fixed;
-
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
-    background: rgba(0, 0, 0, 0.5);
-
+    background: rgba(0, 0, 0, 0.7);
     display: flex;
-
     align-items: center;
     justify-content: center;
-
     z-index: 1000;
 }
 
-
 .profile-modal {
-    width: 400px;
-
+    width: 500px;
     background: white;
-
     border-radius: 20px;
-
     padding: 30px;
-
     position: relative;
-
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-
     box-sizing: border-box;
 }
 
-
 .profile-modal h2 {
     text-align: center;
-
     margin-bottom: 25px;
-
     /* color: #661477; */
-
     font-size: 28px;
 }
 
-
-/* CLOSE X */
-
 .profile-close {
     position: absolute;
-
     top: 12px;
     right: 18px;
-
     border: none;
-
     background: transparent;
-
     font-size: 30px;
-
     cursor: pointer;
-
     color: #555;
 }
-
 
 .profile-close:hover {
     color: black;
 }
 
-
-/* PROFILE ICON */
-
-.profile-avatar {
-    width: 80px;
-    height: 80px;
-
-    border-radius: 50%;
-
-    background-color: #661477;
-
-    color: white;
-
+.profile-avatar img{
+    width: 100px;
+    height: 100px;
     display: flex;
-
     align-items: center;
     justify-content: center;
-
-    font-size: 45px;
-
     margin: 0 auto 25px auto;
 }
 
-
-/* INFORMATION */
-
 .profile-field {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
-
 
 .profile-field label {
     display: block;
-
     font-weight: bold;
-
     /* color: #661477; */
-
     margin-bottom: 5px;
 }
 
-
 .profile-field p {
     margin: 0;
-
     padding: 10px 12px;
-
     background: #f3f3f3;
-
     border-radius: 8px;
-
-    color: #333;
+    color: rgb(39, 37, 37);
 }
-
-
-/* CLOSE BUTTON */
 
 .profile-done {
     width: 100%;
-
     height: 45px;
-
     margin-top: 10px;
-
     border: none;
-
     border-radius: 25px;
-
     background-color: #661477;
-
     color: white;
-
     font-weight: bold;
-
     cursor: pointer;
 }
 
-
 .profile-done:hover {
+    /* border: 2px solid red; */
     background-color: #50105f;
 }
 
-/* =========================
-   USER DASHBOARD
-========================= */
-
 .user-dashboard {
+    /* border: 2px solid red; */
     width: 100%;
     min-height: 100vh;
-
     padding: 20px 55px;
-
     box-sizing: border-box;
 }
 
 .profile-button {
-    width: 55px;
-    height: 55px;
-
-    border-radius: 50%;
-
-    background-color: #661477;
-
-    border: 3px solid black;
-
+    border: none;
+    background-color: transparent;
+    /* border: 3px solid black; */
     display: flex;
     align-items: center;
     justify-content: center;
-
     cursor: pointer;
 }
-
-/* =========================
-   TOP BAR
-========================= */
-
-.dashboard-top {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    margin-bottom: 10px;
+.profile-button img{
+    border: none;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
 }
-
-
-/* =========================
-   LOCATION SEARCH
-========================= */
+.dashboard-top {
+    /* border: 2px solid red; */
+    display: flex;
+    /* justify-content:center; */
+    justify-content:space-around;
+    align-items: center;
+    margin-bottom: 30px;
+}
 
 .location-search {
     width: 65%;
-
     height: 50px;
-
-    border: 3px solid black;
-
+    border: 3px solid #661477;
     border-radius: 30px;
-
     display: flex;
-
     align-items: center;
-
     padding: 0 12px;
-
-    box-sizing: border-box;
 }
-
-
-.location-icon {
-    font-size: 28px;
-
-    margin-right: 8px;
-}
-
 
 .location-search input {
     flex: 1;
-
     border: none;
-
     outline: none;
-
     font-size: 25px;
-
     background: transparent;
 }
 
-
-.search-button {
-    border: none;
-
-    background: transparent;
-
-    font-size: 25px;
-
-    cursor: pointer;
-}
 .location-button {
-    width: 45px;
-    height: 45px;
-
+    width: 50px;
+    height: 50px;
     border: none;
     background: transparent;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding: 0;
     cursor: pointer;
 }
@@ -271,193 +157,83 @@
 .location-button img {
     width: 25px;
     height: 25px;
-
     object-fit: contain;
 }
 
-.profile-button img{
+.map-container {
     /* border: 2px solid red; */
-    width: 55px;
-    height: 55px;
-    object-fit: contain;
-}
-
-.profile-button span{
-     border: 2px solid red;
-}
-
-.coordinates {
-    font-size: 14px;
-    margin-top: 10px;
-}
-
-
-/* =========================
-   MAP
-========================= */
-
-.map-container {
-    width: 65%;
-
+    /* width: 70%; */
     height: 300px;
-
-    margin-top: 10px;
-
-    overflow: hidden;
+    margin: auto;
+    /* overflow: hidden; */
 }
-
-
-.map-container {
-    width: 65%;
-    height: 300px;
-
-    margin-top: 10px;
-
-    overflow: hidden;
-}
-
 
 .user-map {
     width: 100%;
     height: 100%;
 }
 
-
-.map-pin {
-    font-size: 100px;
-
-    filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.4));
-}
-
-
-/* =========================
-   POTHOLE DETECTION
-========================= */
-
-.detection-section {
+.detection-section, .report-section{
+    /* border: 2px solid red; */
+    width: 400px;
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
-    margin-top: 10px;
-
-    margin-left: 35px;
+    margin: 20px 400px;
 }
-
-
-.warning-icon {
-    font-size: 35px;
-}
-
 
 .detection-message {
     background-color: #ffc94f;
-
-    border: 3px solid black;
-
+    border: 3px solid rgb(0, 0, 0);
     border-radius: 30px;
-
     padding: 10px 25px;
-
     font-weight: bold;
-
     font-size: 14px;
 }
 
-
-/* =========================
-   REPORT SECTION
-========================= */
-
-.report-section {
-    display: flex;
-
-    align-items: center;
-
-    gap: 15px;
-
-    margin-top: 10px;
-
-    margin-left: 35px;
-}
-
-
-.camera-icon {
-    font-size: 35px;
-}
-
-
 .report-pothole-button {
-    width: 220px;
-
+    width: 310px;
     height: 45px;
-
     background-color: #08aa4b;
-
     color: white;
-
     border: 3px solid black;
-
     border-radius: 30px;
-
     font-size: 15px;
-
     font-weight: bold;
-
     cursor: pointer;
 }
 
-
 .report-pothole-button:hover {
-    background-color: #078e40;
+    background-color: #34ad66;
 }
 
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 900px) {
-
-    .user-dashboard {
-        padding: 20px;
-    }
-
-    .location-search {
-        width: 80%;
-    }
-
-    .map-container {
-        width: 100%;
-    }
-
+@media screen and (max-width: 900px) {
+.user-dashboard {
+    padding: 20px;
 }
-
+.location-search {
+    width: 80%;
+}
+.map-container {
+    width: 100%;
+}
+}
 
 @media (max-width: 600px) {
-
-    .dashboard-top {
-        gap: 10px;
-    }
-
-    .location-search {
-        width: 85%;
-    }
-
-    .location-search input {
-        font-size: 18px;
-    }
-
-    .profile-button {
-        width: 45px;
-        height: 45px;
-    }
-
-    .detection-section,
-    .report-section {
-        margin-left: 0;
-    }
-
+.dashboard-top {
+    gap: 10px;
+}
+.location-search {
+    width: 85%;
+}
+.location-search input {
+    font-size: 18px;
+}
+.profile-button {
+    width: 45px;
+    height: 45px;
+}
+.detection-section,.report-section {
+    margin-left: 0;
+}
 }

@@ -40,13 +40,9 @@ function UserDashboard() {
             }
         )
 }
-
     const handleReport = () => {
-
-        navigate("/report");
-
+    navigate("/report");
 }
-
     const searchLocation = async () => {
         if (!location || location === "Enter your location") {
             alert("Please enter a location");
@@ -78,200 +74,79 @@ function UserDashboard() {
                 </div>
                 
                 <button className="profile-button" onClick={() => setShowProfile(true)}>
-                        <span><img src="./profile.webp"/></span>
-                    </button>
+                    <span><img src="./profile.webp"/></span>
+                </button>
 
                 </div>
-
-
-                {/* =========================
-                    PROFILE MODAL
-                ========================= */}
 
                 {showProfile && (
-
                     <div className="profile-modal-overlay">
-
                         <div className="profile-modal">
-
-                            <button
-                                className="profile-close"
-                                onClick={() => setShowProfile(false)}
-                            >
-                                ×
-                            </button>
-
-
+                        <button className="profile-close" onClick={() => setShowProfile(false)}>x</button>
                             <h2>My Profile</h2>
-
-
                             <div className="profile-information">
-
                                 <div className="profile-avatar">
-                                    ♙
+                                    <img src="./profile.webp"/>
                                 </div>
 
-
                                 <div className="profile-field">
-
                                     <label>Name</label>
-
-                                    <p>
-                                        {user?.name || "Not available"}
-                                    </p>
-
+                                    <p>{user?.name || "Not available"}</p>
                                 </div>
 
-
                                 <div className="profile-field">
-
                                     <label>Email</label>
-
-                                    <p>
-                                        {user?.email || "Not available"}
-                                    </p>
-
+                                    <p>{user?.email || "Not available"}</p>
                                 </div>
-
 
                                 <div className="profile-field">
-
                                     <label>Role</label>
-
-                                    <p>
-                                        {user?.role || "Not available"}
-                                    </p>
-
+                                    <p>{user?.role || "Not available"}</p>
                                 </div>
-
                             </div>
 
-
-                            <button
-                                className="profile-done"
-                                onClick={() => setShowProfile(false)}
-                            >
-                                Close
-                            </button>
-
+                            <button className="profile-done" onClick={() => setShowProfile(false)}>Close</button>
                         </div>
-
                     </div>
-
                 )}
-
-
-                {/* =========================
-                    MAP
-                ========================= */}
 
                 <div className="map-container">
-
-                    <MapContainer
-                        center={defaultLocation}
-                        zoom={12}
-                        className="user-map"
-                    >
-
-                        <TileLayer
-                            attribution="&copy; OpenStreetMap contributors"
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-
-
-                        <ChangeMapLocation
-                            coordinates={coordinates}
-                        />
-
-
-                        {coordinates.latitude !== null &&
-                            coordinates.longitude !== null && (
-
-                                <Marker
-                                    position={[
-                                        coordinates.latitude,
-                                        coordinates.longitude
-                                    ]}
-                                >
-
-                                    <Popup>
-                                        Selected Location
-                                    </Popup>
-
-                                </Marker>
-
-                            )}
-
+                    <MapContainer center={defaultLocation} zoom={12} className="user-map">
+                    <TileLayer attribution="&copy; OpenStreetMap contributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+                        <ChangeMapLocation coordinates={coordinates}/>
+                        {coordinates.latitude !== null && coordinates.longitude !== null && (
+                        <Marker position={[ coordinates.latitude, coordinates.longitude]}>
+                        <Popup>Selected Location</Popup>
+                        </Marker>
+                    )}
                     </MapContainer>
-
                 </div>
-
-
-                {/* =========================
-                    COORDINATES
-                ========================= */}
 
                 {coordinates.latitude !== null && (
-
-                    <p className="coordinates">
-
-                        Latitude: {coordinates.latitude}
-
-                        <br />
-
-                        Longitude: {coordinates.longitude}
-
-                    </p>
-
+                <p className="coordinates">Latitude: {coordinates.latitude} Longitude: {coordinates.longitude}</p>
                 )}
 
-
-                {/* =========================
-                    POTHOLE DETECTION
-                ========================= */}
-
                 <div className="detection-section">
-
-                    <div className="warning-icon">
-                        ⚠️
+                    <div className="location-button">
+                        <img src="./warning.jpg"/>
                     </div>
-
 
                     <div className="detection-message">
-
                         POTHOLE DETECTED ON MAIN ROAD
-
                     </div>
-
                 </div>
-
-
-                {/* =========================
-                    REPORT BUTTON
-                ========================= */}
 
                 <div className="report-section">
-
-                    <div className="camera-icon">
-                        📸
+                    <div className="location-button">
+                        <img src="camera.webp"/>
                     </div>
 
-
-                    <button
-                        className="report-pothole-button"
-                        onClick={handleReport}
-                    >
-                        Report Pothole
-                    </button>
-
+                    <button className="report-pothole-button" onClick={handleReport}>Report Pothole</button>
                 </div>
-
             </div>
-
         </DashboardLayout>
-
-    );
+    )
 }
 
 
-export default UserDashboard;
+export default UserDashboard

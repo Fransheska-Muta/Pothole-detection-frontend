@@ -31,14 +31,9 @@ if (user?.role === "user") {
                         <span>Home</span>
                     </Link>
 
-                    <Link to="/profile" className="navbar-link" onClick={() => setIsOpen(false)}>
-                        <span className="nav-icon">♙</span>
-                        <span>Profile</span>
-                    </Link>
-
-                    <Link to="/locations" className="navbar-link" onClick={() => setIsOpen(false)}>
+                    <Link to="/report" className="navbar-link" onClick={() => setIsOpen(false)}>
                         <span className="nav-icon">●</span>
-                        <span>Locations</span>
+                        <span>Report</span>
                     </Link>
 
                     {isMunicipality && (
