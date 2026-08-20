@@ -1,26 +1,239 @@
-.dashboard{
-    font-size: 50px;
+.dashboard-content{
+    margin: 0;
+    padding: 0;
+}
+.profile-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.profile-modal {
+    width: 500px;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+}
+
+.profile-modal h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    /* color: #661477; */
+    font-size: 28px;
+}
+
+.profile-close {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    border: none;
+    background: transparent;
+    font-size: 30px;
+    cursor: pointer;
+    color: #555;
+}
+
+.profile-close:hover {
     color: black;
-    /* height: 100vh; */
-    /* background-color: rgb(107, 10, 187); */
 }
 
-body{
-    background-color: rgb(107, 10, 187);
+.profile-avatar img{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px auto;
 }
 
-.logout-btn{
+.profile-field {
+    margin-bottom: 20px;
+}
+
+.profile-field label {
+    display: block;
+    font-weight: bold;
+    /* color: #661477; */
+    margin-bottom: 5px;
+}
+
+.profile-field p {
+    margin: 0;
+    padding: 10px 12px;
+    background: #f3f3f3;
+    border-radius: 8px;
+    color: rgb(39, 37, 37);
+}
+
+.profile-done {
+    width: 100%;
+    height: 45px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: #661477;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.profile-done:hover {
     /* border: 2px solid red; */
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    background:white;
-    color:#5D1578;
-    font-weight:bold;
+    background-color: #50105f;
 }
 
-.logout-btn:hover{
-    background:#ececec;
+.user-dashboard {
+    /* border: 2px solid red; */
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px 55px;
+    box-sizing: border-box;
 }
 
+.profile-button {
+    border: none;
+    background-color: transparent;
+    /* border: 3px solid black; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.profile-button img{
+    border: none;
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+.dashboard-top {
+    /* border: 2px solid red; */
+    display: flex;
+    /* justify-content:center; */
+    justify-content:space-around;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.location-search {
+    width: 65%;
+    height: 50px;
+    border: 3px solid #661477;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+}
+
+.location-search input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 25px;
+    background: transparent;
+}
+
+.location-button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+}
+
+.location-button img {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
+}
+
+.map-container {
+    /* border: 2px solid red; */
+    /* width: 70%; */
+    height: 300px;
+    margin: auto;
+    /* overflow: hidden; */
+}
+
+.user-map {
+    width: 100%;
+    height: 100%;
+}
+
+.detection-section, .report-section{
+    /* border: 2px solid red; */
+    width: 400px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 400px;
+}
+
+.detection-message {
+    background-color: #ffc94f;
+    border: 3px solid rgb(0, 0, 0);
+    border-radius: 30px;
+    padding: 10px 25px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.report-pothole-button {
+    width: 310px;
+    height: 45px;
+    background-color: #08aa4b;
+    color: white;
+    border: 3px solid black;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.report-pothole-button:hover {
+    background-color: #34ad66;
+}
+
+@media screen and (max-width: 900px) {
+.user-dashboard {
+    padding: 20px;
+}
+.location-search {
+    width: 80%;
+}
+.map-container {
+    width: 100%;
+}
+}
+
+@media (max-width: 600px) {
+.dashboard-top {
+    gap: 10px;
+}
+.location-search {
+    width: 85%;
+}
+.location-search input {
+    font-size: 18px;
+}
+.profile-button {
+    width: 45px;
+    height: 45px;
+}
+.detection-section,.report-section {
+    margin-left: 0;
+}
+}

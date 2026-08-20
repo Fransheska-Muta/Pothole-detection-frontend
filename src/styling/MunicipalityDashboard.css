@@ -1,0 +1,159 @@
+.municipality-dashboard {
+    width: 100%;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    padding: 25px 40px;
+}
+
+
+/* =========================
+   FILTER SECTION
+========================= */
+
+.filter-section {
+    display: flex;
+    align-items: center;
+
+    gap: 35px;
+
+    margin-bottom: 90px;
+}
+
+
+.filter-section h2 {
+    margin: 0;
+
+    font-size: 25px;
+}
+
+
+.filter {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+}
+
+
+.filter label {
+    font-size: 18px;
+}
+
+
+.filter select {
+    width: 95px;
+
+    height: 30px;
+
+    border: 2px solid black;
+    border-radius: 20px;
+
+    background-color: white;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.reports-table-container {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+.reports-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 15px;
+}
+
+
+.reports-table th {
+    background-color: #d8c1ff;
+
+    border: 2px solid #b28cff;
+
+    padding: 12px;
+
+    text-align: center;
+
+    font-weight: 600;
+}
+
+
+.reports-table td {
+    border: 2px solid #b28cff;
+
+    padding: 20px 12px;
+
+    text-align: center;
+}
+
+
+/* =========================
+   SEVERITY
+========================= */
+
+.severity.large {
+    color: #ff4d5a;
+}
+
+.severity.medium {
+    color: #ffae2b;
+}
+
+.severity.small {
+    color: #16b85a;
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+.status.pending {
+    color: #ffae2b;
+}
+
+.status.in-progress {
+    color: #4d7cff;
+}
+
+.status.resolved {
+    color: #16b85a;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 800px) {
+
+    .municipality-dashboard {
+        padding: 25px 20px;
+    }
+
+    .filter-section {
+        flex-wrap: wrap;
+
+        gap: 20px;
+
+        margin-bottom: 50px;
+    }
+
+    .filter-section h2 {
+        width: 100%;
+    }
+
+}

@@ -2,74 +2,65 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import "../styling/Navbar.css";
 
-function Navbar() {
-
-    const { user } = useAuth();
-
-    const isMunicipality = user?.role === "municipality";
-
+function Navbar({ isOpen, setIsOpen }) {
+const { user } = useAuth()
+const isMunicipality = user?.role === "municipality"
+const isSuperAdmin = user?.role === "superAdmin"
+let homePath = "/";
+if (user?.role === "user") {
+    homePath = "/user";
+} else if (user?.role === "municipality") {
+    homePath = "/municipality";
+} else if (user?.role === "superAdmin") {
+    homePath = "/superAdmin";
+}
     return (
      <>
-        <nav className="side-navbar">
+        <button className="hamburger-button" onClick={() => setIsOpen(!isOpen)}>☰</button>
 
-            {/* LOGO */}
-            <div className="navbar-logo">
-
-                <div className="logo-icon">
-                    🚗
+            <nav className={isOpen ? "side-navbar open" : "side-navbar"}>
+                <button className="close-button" onClick={() => setIsOpen(false)}>x</button>
+                <div className="navbar-logo">
+                    <div className="logo-icon"><img src="/LOGO.webp"/></div>
+                    <h1>SPDMS</h1>
                 </div>
+                
+                <div className="navbar-links">
+                    <Link to={homePath} className="navbar-link" onClick={() => setIsOpen(false)}>
+                        <span className="nav-icon">⌂</span>
+                        <span>Home</span>
+                    </Link>
 
-                <h1>SPDMS</h1>
-
-            </div>
-
-
-            {/* NAVIGATION */}
-            <div className="navbar-links">
-
-                {/* HOME */}
-                <Link to="/" className="navbar-link">
-                    <span className="nav-icon">⌂</span>
-                    <span>Home</span>
-                </Link>
-
-
-                {/* PROFILE */}
-                <Link to="/profile" className="navbar-link">
-                    <span className="nav-icon">♙</span>
-                    <span>Profile</span>
-                </Link>
-
-
-                {/* LOCATIONS */}
-                <Link to="/locations" className="navbar-link">
-                    <span className="nav-icon">●</span>
-                    <span>Locations</span>
-                </Link>
-
-
-                {/* NORMAL USER REPORT */}
-                {!isMunicipality && (
-                    <Link to="/report" className="navbar-link">
-                        <span className="nav-icon">📸</span>
+                    <Link to="/report" className="navbar-link" onClick={() => setIsOpen(false)}>
+                        <span className="nav-icon">●</span>
                         <span>Report</span>
                     </Link>
-                )}
 
+                    {isMunicipality && (
+                        <Link to="/report" className="navbar-link" onClick={() => setIsOpen(false)}>
+                            <span className="nav-icon">📸</span>
+                            <span>Report</span>
+                        </Link>
+                    )}
 
-                {/* MUNICIPALITY ONLY */}
-                {isMunicipality && (
-                    <Link to="/reports" className="navbar-link">
-                        <span className="nav-icon">📋</span>
-                        <span>View Reports</span>
-                    </Link>
-                )}
+                    {isMunicipality && (
+                        <Link to="/reports" className="navbar-link" onClick={() => setIsOpen(false)}>
+                            <span className="nav-icon">📋</span>
+                            <span>View Reports</span>
+                        </Link>
+                    )}
+                    {isSuperAdmin && (
+                        <Link to="/reports" className="navbar-link" onClick={() => setIsOpen(false)}>
+                            <span className="nav-icon">📋</span>
+                            <span>View Reports</span>
+                        </Link>
+                    )}
 
-            </div>
+                </div>
 
-        </nav>
-    </>
-);
+            </nav>
+        </>
+    );
 }
 
 export default Navbar;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import "../styling/SuperAdminDashboard.css";
+import DashboardLayout from "../components/DashboardLayout"
 
 function SuperAdminDashboard() {
     const {user, logout} = useAuth();
@@ -14,11 +15,7 @@ useEffect(() => {
         try {
             const response = await fetch( "http://localhost:3000/users", { headers: { Authorization: `Bearer ${user.token}`}});
             const data = await response.json();
-            // console.log("Users:", data);
-            if (!response.ok) {
-                // console.log(data.message);
-                return
-            } setUsers(data);
+            setUsers(data);
         } catch (error) {
             console.error("Error fetching users:", error);
         }
@@ -65,63 +62,34 @@ const handlePromote = async () => {
     }
 }
 const handleDemote = async (email) => {
-
-    const confirmDemote = window.confirm(
-        `Are you sure you want to demote ${email}?`
-    );
-
+    const confirmDemote = window.confirm(`Are you sure you want to demote ${email}?`);
     if (!confirmDemote) {
-        return;
+        return
     }
-
     try {
-
-        const response = await fetch(
-            "http://localhost:3000/users/demote",
+        const response = await fetch("http://localhost:3000/users/demote",
             {
-                method: "PUT",
-
-                headers: {
-                    Authorization: `Bearer ${user.token}`,
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    email: email
-                })
+              method: "PUT",
+              headers: {Authorization: `Bearer ${user.token}`,"Content-Type": "application/json"},
+              body: JSON.stringify({email: email})
             }
         );
-
         const data = await response.json();
-
-        console.log("Demotion response:", data);
-
         if (!response.ok) {
             alert(data.message);
-            return;
+            return
         }
-
         // Remove the demoted user from the table
-        setUsers((currentUsers) =>
-            currentUsers.filter(
-                (currentUser) => currentUser.email !== email
-            )
-        );
-
+        setUsers((currentUsers) =>currentUsers.filter((currentUser) => currentUser.email !== email));
         alert("User demoted successfully!");
-
     } catch (error) {
-
-        console.error(
-            "Demotion error:",
-            error
-        );
-
+        console.error("Demotion error:",error);
         alert("Unable to demote user.");
     }
-};
+}
 
 return (
+    <DashboardLayout> 
           <div className="superadmin-container">
             <h1>Super Admin Dashboard</h1>
             <p>Welcome, {user?.name}</p>
@@ -166,7 +134,7 @@ return (
 
             <select value={role} onChange={(event) => setRole(event.target.value)}>
             <option value="user"> User</option>
-            {/* <option value="superAdmin"> SuperAdmin </option> */}
+            <option value="superAdmin"> SuperAdmin </option>
             <option value="municipality">Municipality </option>
             </select>
 
@@ -175,6 +143,7 @@ return (
         </div>
     </div>)}
     </div>
+    </DashboardLayout>
 );
 }
 

@@ -5,6 +5,7 @@ import MunicipalityDashboard from "./pages/MunicipalityDashboard";
 import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PageNotFound from "./pages/PageNotFound";
+import Report from "./pages/Report"
 
 function App() {
   return (
@@ -27,6 +28,12 @@ function App() {
             <SuperAdminDashboard />
          </ProtectedRoute>
         }/>
+        <Route path="/report" element={ 
+          <ProtectedRoute role="user">
+            <Report />
+         </ProtectedRoute>
+        }/>
+
       </Routes>
     </BrowserRouter>
  )
