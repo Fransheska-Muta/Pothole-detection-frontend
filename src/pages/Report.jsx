@@ -21,7 +21,7 @@ function Report() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!location) {
+        if (!location.trim()) {
             alert("Please enter the location.");
             return
         }
@@ -29,21 +29,35 @@ function Report() {
             alert("Please select the pothole severity.");
             return
         }
-        if (!description) {
+        if (!description.trim()) {
             alert("Please describe the pothole.");
             return
         }
+        if(!image){
+            alert("PLease upload an image of pothole")
+            return
+        }
+        if(!user?.token){
+            alert("You are not logged in")
+            return
+        }
         try {
+            const formData = new FormData()
+            formData.append("location", location)
+            formData.append("severity", severity)
+            formData.append("description", description)
+            formData.append("image", image)
             const response = await fetch("http://localhost:3000/report",
                 {
                   method: "POST",
-                  headers: {"Content-Type": "application/json",Authorization: `Bearer ${user.token}`},
-                  body: JSON.stringify({ location, severity, description})
+                  headers: {Authorization: `Bearer ${user.token}`},
+                //   because images cannot be stored using JSON we are using formData
+                  body: formData
                 }
             )
             const data = await response.json();
             if (!response.ok) {
-                alert(data.message);
+                alert(data.message || "Unable to submit report");
                 return
             }
             alert("Pothole reported successfully!");
@@ -81,7 +95,7 @@ function Report() {
                         ) : (
                         <div className="image-placeholder">Upload pothole image</div>
                         )}
-                        <label htmlFor="image-input" className="camera-button"><img src="camera.webp"/></label>
+                        <label htmlFor="image-input" className="camera-button"><img src="./camera.webp"/></label>
                         <input id="image-input" type="file" accept="image/*" onChange={handleImageChange} hidden/>
                         </div>
                     </div>
