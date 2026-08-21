@@ -1,60 +1,117 @@
-.municipality-dashboard {
+.municipality-reports {
+    padding: 35px;
     width: 100%;
-    min-height: 100vh;
-
     box-sizing: border-box;
-
-    padding: 25px 40px;
 }
 
 
 /* =========================
-   FILTER SECTION
+   HEADER
 ========================= */
 
-.filter-section {
-    display: flex;
-    align-items: center;
-
-    gap: 35px;
-
-    margin-bottom: 90px;
+.reports-header {
+    margin-bottom: 25px;
 }
 
-
-.filter-section h2 {
+.reports-header h1 {
     margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+}
 
-    font-size: 25px;
+.reports-header p {
+    margin-top: 8px;
+    color: #777;
 }
 
 
-.filter {
+/* =========================
+   FILTERS
+========================= */
+
+.report-filters {
+    display: flex;
+    align-items: end;
+    gap: 20px;
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    margin-bottom: 25px;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+    flex-wrap: wrap;
+}
+
+
+.filter-group {
     display: flex;
     flex-direction: column;
-
-    gap: 6px;
+    gap: 7px;
 }
 
 
-.filter label {
-    font-size: 18px;
+.filter-group label {
+    font-size: 14px;
+    font-weight: 600;
 }
 
 
-.filter select {
-    width: 95px;
+.filter-group input,
+.filter-group select {
 
-    height: 30px;
+    height: 42px;
 
-    border: 2px solid black;
-    border-radius: 20px;
+    padding: 0 12px;
 
-    background-color: white;
+    border: 1px solid #ddd;
 
-    text-align: center;
+    border-radius: 9px;
+
+    font-size: 14px;
+
+    outline: none;
+
+    min-width: 180px;
+
+    box-sizing: border-box;
+}
+
+
+.filter-group input:focus,
+.filter-group select:focus {
+
+    border-color: #555;
+
+}
+
+
+.clear-filters {
+
+    height: 42px;
+
+    padding: 0 18px;
+
+    border: none;
+
+    border-radius: 9px;
 
     cursor: pointer;
+
+    background: #eeeeee;
+
+    font-weight: 600;
+}
+
+
+.clear-filters:hover {
+
+    background: #dddddd;
+
 }
 
 
@@ -63,40 +120,62 @@
 ========================= */
 
 .reports-table-container {
-    width: 100%;
+
+    background: white;
+
+    border-radius: 16px;
 
     overflow-x: auto;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.06);
 }
 
 
 .reports-table {
+
     width: 100%;
 
     border-collapse: collapse;
 
-    font-size: 15px;
 }
 
 
 .reports-table th {
-    background-color: #d8c1ff;
 
-    border: 2px solid #b28cff;
+    padding: 17px;
 
-    padding: 12px;
+    text-align: left;
 
-    text-align: center;
+    font-size: 14px;
 
-    font-weight: 600;
+    border-bottom: 1px solid #eee;
 }
 
 
 .reports-table td {
-    border: 2px solid #b28cff;
 
-    padding: 20px 12px;
+    padding: 17px;
 
-    text-align: center;
+    border-bottom: 1px solid #eee;
+
+    font-size: 14px;
+
+}
+
+
+.report-row {
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+
+.report-row:hover {
+
+    background: #f7f7f7;
+
 }
 
 
@@ -104,16 +183,36 @@
    SEVERITY
 ========================= */
 
-.severity.large {
-    color: #ff4d5a;
+.severity-badge {
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
 }
 
-.severity.medium {
-    color: #ffae2b;
+
+.severity-badge.small {
+
+    background: #e6f6e9;
+
 }
 
-.severity.small {
-    color: #16b85a;
+
+.severity-badge.medium {
+
+    background: #fff2d8;
+
+}
+
+
+.severity-badge.large {
+
+    background: #ffe2e2;
+
 }
 
 
@@ -121,16 +220,270 @@
    STATUS
 ========================= */
 
-.status.pending {
-    color: #ffae2b;
+.status-badge {
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 600;
 }
 
-.status.in-progress {
-    color: #4d7cff;
+
+.status-badge.pending {
+
+    background: #fff2d8;
+
 }
 
-.status.resolved {
-    color: #16b85a;
+
+.status-badge.in-progress {
+
+    background: #e3efff;
+
+}
+
+
+.status-badge.resolved {
+
+    background: #e6f6e9;
+
+}
+
+
+/* =========================
+   MESSAGES
+========================= */
+
+.reports-message,
+.no-reports {
+
+    padding: 30px;
+
+    text-align: center;
+
+    color: #777;
+}
+
+
+.reports-error {
+
+    color: #d00000;
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.report-modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 1000;
+
+    padding: 20px;
+}
+
+
+.report-details-modal {
+
+    position: relative;
+
+    background: white;
+
+    width: 100%;
+
+    max-width: 560px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+
+/* CLOSE */
+
+.report-modal-close {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 18px;
+
+    border: none;
+
+    background: none;
+
+    font-size: 30px;
+
+    cursor: pointer;
+
+    color: #555;
+}
+
+
+/* TITLE */
+
+.report-details-modal h2 {
+
+    text-align: center;
+
+    margin-top: 0;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.report-image-section {
+
+    width: 100%;
+
+    height: 240px;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    background: #f3f3f3;
+
+    margin-bottom: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.report-detail-image {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.no-image {
+
+    color: #888;
+
+}
+
+
+/* =========================
+   INFORMATION
+========================= */
+
+.report-information {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 17px;
+}
+
+
+.report-field {
+
+    background: #f7f7f7;
+
+    padding: 14px 16px;
+
+    border-radius: 10px;
+}
+
+
+.report-field label {
+
+    display: block;
+
+    font-size: 12px;
+
+    color: #777;
+
+    margin-bottom: 5px;
+
+}
+
+
+.report-field p {
+
+    margin: 0;
+
+    font-size: 15px;
+
+    font-weight: 500;
+
+}
+
+
+/* =========================
+   UPDATE STATUS
+========================= */
+
+.update-status-button {
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    height: 48px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    background: #111;
+
+    color: white;
+
+    transition: 0.2s ease;
+}
+
+
+.update-status-button:hover {
+
+    background: #333;
+
 }
 
 
@@ -138,22 +491,43 @@
    RESPONSIVE
 ========================= */
 
-@media (max-width: 800px) {
+@media (max-width: 700px) {
 
-    .municipality-dashboard {
-        padding: 25px 20px;
+    .municipality-reports {
+
+        padding: 20px;
+
     }
 
-    .filter-section {
-        flex-wrap: wrap;
 
-        gap: 20px;
+    .report-filters {
 
-        margin-bottom: 50px;
+        flex-direction: column;
+
+        align-items: stretch;
+
     }
 
-    .filter-section h2 {
+
+    .filter-group input,
+    .filter-group select {
+
         width: 100%;
+
+    }
+
+
+    .clear-filters {
+
+        width: 100%;
+
+    }
+
+
+    .report-details-modal {
+
+        padding: 22px;
+
     }
 
 }

@@ -18,8 +18,8 @@ function ChangeMapLocation({ coordinates }) {
 
 function UserDashboard() {
     const navigate = useNavigate()
-    const { user } = useAuth()
-    const [location, setLocation] = useState("Enter your location");
+    const { user, logout } = useAuth()
+    const [location, setLocation] = useState("");
     const [coordinates, setCoordinates] = useState({latitude: null,longitude: null});
     const [showProfile, setShowProfile] = useState(false);
 
@@ -69,7 +69,7 @@ function UserDashboard() {
                 <div className="dashboard-top">
                 <div className="location-search">
                 <button className="location-button" onClick={getMyLocation}><img src="./location.png"/></button>
-                <input type="text" value={location} onChange={(event) =>setLocation(event.target.value)}/>
+                <input type="text" value={location} placeholder="Please click/enter your location" onChange={(event) =>setLocation(event.target.value)}/>
                 <button className="location-button" onClick={searchLocation}><img src="./search.webp"/></button>
                 </div>
                 
@@ -103,6 +103,7 @@ function UserDashboard() {
                                     <label>Role</label>
                                     <p>{user?.role || "Not available"}</p>
                                 </div>
+                                <button className="logout" onClick={logout}> Logout</button>
                             </div>
 
                             <button className="profile-done" onClick={() => setShowProfile(false)}>Close</button>

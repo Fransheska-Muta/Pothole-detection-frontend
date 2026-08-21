@@ -100,6 +100,21 @@
     box-sizing: border-box;
 }
 
+.logout {
+    background: #661477;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 25px;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: -65px;
+}
+
+.logout {
+    background: #4f0f74;
+}
+
 .profile-button {
     border: none;
     background-color: transparent;
