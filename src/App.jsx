@@ -6,6 +6,7 @@ import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PageNotFound from "./pages/PageNotFound";
 import Report from "./pages/Report"
+import UpdateStatus from "./pages/UpdateStatus"
 // import UpdateStatus from "./pages/UpdateStatus"
 
 function App() {
@@ -35,11 +36,11 @@ function App() {
          </ProtectedRoute>
         }/>
 
-        {/* <Route path="/update-status"element={
+        <Route path="/update-status"element={
         <ProtectedRoute role="municipality">
           <UpdateStatus />
         </ProtectedRoute>
-        }/> */}
+        }/>
 
       </Routes>
     </BrowserRouter>
