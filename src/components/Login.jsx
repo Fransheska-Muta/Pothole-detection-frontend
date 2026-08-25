@@ -21,13 +21,7 @@ function Login({ showSignup }) {
           if (response.ok) {
            login(data); 
         alert("Welcome Back!")
-        if(data.role === "user"){
             navigate("/user")
-        }else if(data.role === "municipality"){
-            navigate("/municipality")
-        }else if(data.role === "superAdmin"){
-            navigate("/superAdmin")
-        }
             // console.log(data);              
         } else {
             alert(data.message);
