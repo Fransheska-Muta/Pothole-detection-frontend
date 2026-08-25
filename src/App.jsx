@@ -16,28 +16,28 @@ function App() {
         <Route path="/" element={<AuthPage/>}/>
         <Route path="*" element={<PageNotFound />} />
         <Route path="/user" element={
-          <ProtectedRoute role="user">
+          <ProtectedRoute roles={["user","municipality", "superAdmin"]}>
             <UserDashboard />
           </ProtectedRoute>
         }/>
         <Route path="/municipality" element={
-          <ProtectedRoute role="municipality">
+          <ProtectedRoute roles={["municipality", "superAdmin"]}>
             <MunicipalityDashboard />
           </ProtectedRoute>
         }/>
         <Route path="/superadmin" element={ 
-          <ProtectedRoute role="superAdmin">
+          <ProtectedRoute roles={["superAdmin"]}>
             <SuperAdminDashboard />
          </ProtectedRoute>
         }/>
         <Route path="/report" element={ 
-          <ProtectedRoute role="user">
+          <ProtectedRoute roles={["user","municipality", "superAdmin"]}>
             <Report />
          </ProtectedRoute>
         }/>
 
         <Route path="/update-status"element={
-        <ProtectedRoute role="municipality">
+        <ProtectedRoute roles={["municipality", "superAdmin"]}>
           <UpdateStatus />
         </ProtectedRoute>
         }/>
