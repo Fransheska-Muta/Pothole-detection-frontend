@@ -18,61 +18,77 @@ function Report() {
             setImage(selectedImage);
         }
     }
+const handleSubmit = async (event) => {
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (!location.trim()) {
-            alert("Please enter the location.");
-            return
-        }
-        if (!severity) {
-            alert("Please select the pothole severity.");
-            return
-        }
-        if (!description.trim()) {
-            alert("Please describe the pothole.");
-            return
-        }
-        if(!image){
-            alert("PLease upload an image of pothole")
-            return
-        }
-        if(!user?.token){
-            alert("You are not logged in")
-            return
-        }
-        try {
-            const formData = new FormData()
-            formData.append("location", location)
-            formData.append("severity", severity)
-            formData.append("description", description)
-            formData.append("image", image)
-            const response = await fetch("http://localhost:3000/report",
-                {
-                  method: "POST",
-                  headers: {Authorization: `Bearer ${user.token}`},
-                //   because images cannot be stored using JSON we are using formData
-                  body: formData
-                }
-            )
-            const data = await response.json();
-            if (!response.ok) {
-                alert(data.message || "Unable to submit report");
-                return
-            }
-            alert("Pothole reported successfully!");
-            //clearing form
-            setLocation("");
-            setDescription("");
-            setSeverity("");
-            setImage(null);
-
-            navigate("/user");
-        } catch (error) {
-            console.error("Report error:", error);
-            alert("Unable to submit report.");
-        }
+    event.preventDefault();
+    if (!location.trim()) {
+        alert("Please enter the location.");
+        return
     }
+    if (!severity) {
+        alert("Please select the pothole severity.");
+        return
+    }
+    if (!description.trim()) {
+        alert("Please describe the pothole.");
+        return
+    }
+    if (!image) {
+        alert("Please upload an image of the pothole.");
+        return
+    }
+    if (!user?.token) {
+        alert("You are not logged in.");
+        return
+    }
+
+    try {
+        //  finding the coordinatesz
+        const geocodeResponse = await fetch(`http://localhost:3000/geocode?address=${encodeURIComponent(location)}`,
+         {headers: {Authorization: `Bearer ${user.token}`}}
+        )
+        const locationData =await geocodeResponse.json();
+        if (!geocodeResponse.ok) {
+            alert(locationData.message ||"Unable to find this location.")
+            return
+        }
+        // getting the coordinates
+        const latitude =Number(locationData.latitude);
+        const longitude =Number(locationData.longitude);
+        console.log("Latitude:", latitude);
+        console.log("Longitude:", longitude);
+
+        const formData = new FormData();
+        formData.append("location", location);
+        formData.append("latitude",latitude)
+        formData.append("longitude",longitude)
+        formData.append("severity",severity)
+        formData.append("description",description)
+        formData.append("image",image)
+
+        const response = await fetch("http://localhost:3000/report",{ 
+            method: "POST",
+            headers:{Authorization:`Bearer ${user.token}`},
+            body: formData
+            }
+        )
+        const data =await response.json();
+        if (!response.ok) {
+            alert( data.message || "Unable to submit report")
+            return
+        }
+        alert("Pothole reported successfully!")
+
+        setLocation("");
+        setDescription("");
+        setSeverity("");
+        setImage(null);
+        navigate("/user");
+    } catch (error) {
+        console.error("Report error:",error)
+        alert("Unable to submit report.")
+    }
+}
     return (
         <DashboardLayout>
             <div className="report-page">
