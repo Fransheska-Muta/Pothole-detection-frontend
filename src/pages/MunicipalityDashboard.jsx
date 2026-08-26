@@ -58,10 +58,6 @@ function MunicipalityDashboard() {
         <DashboardLayout>
             <div className="municipality-reports">
                 <div className="reports-header">
-                    <div>
-                        <h1>View Reports</h1>
-                        <p> View and manage pothole reports submitted by users. Click on the status to update it</p>
-                    </div>
                 </div>
                 <div className="report-filters">
                     <div className="filter-group">
