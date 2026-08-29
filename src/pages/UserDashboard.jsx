@@ -54,6 +54,8 @@ function UserDashboard() {
     const [showProfile, setShowProfile] = useState(false);
     const [reports, setReports] = useState([])
     const [nearestPothole, setNearestPothole] = useState(null);
+    const [suggestions, setSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
 
     // calculates teh distance betwen current position and nearest pothole
     const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -131,42 +133,69 @@ useEffect(() => {
     const handleReport = () => {
     navigate("/report");
 }
-    const searchLocation = async () => {
-        if (!location || location === "Enter your location") {
-            alert("Please enter a location");
+    const handleLocationChange = async (event) => {
+    const value = event.target.value;
+    setLocation(value);
+    // it only starts seaches when theres 3 values
+    if (value.trim().length < 3) {
+        setSuggestions([]);
+        setShowSuggestions(false);
+        return
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/geocode/suggestions?address=${encodeURIComponent(value)}`,{
+        headers: {Authorization: `Bearer ${user.token}`}
+        })
+        const data = await response.json();
+        if (!response.ok) {
+            console.error(data.message);
+            setSuggestions([]);
             return
         }
-        try {
-            const response = await fetch(`http://localhost:3000/geocode?address=${encodeURIComponent(location)}`,{headers: {Authorization: `Bearer ${user.token}`}});
-            const data = await response.json();
-            if (!response.ok) {
-                alert(data.message);
-                return
-            }
-            console.log("Location found:", data);
-            setCoordinates({latitude: Number(data.latitude),longitude: Number(data.longitude)})
-        } catch (error) {
-            console.error("Search error:", error);
-            alert("Unable to search for location");
-        }
+
+        setSuggestions(data);
+        setShowSuggestions(true);
+
+    } catch (error) {
+        console.error("Error getting location suggestions:",error)
+    }
+}
+    const selectLocation = (place) => {
+    // show the selected address in the input
+    setLocation(place.name);
+    // moving the map to the selected location
+    setCoordinates({
+        latitude: Number(place.latitude),
+        longitude: Number(place.longitude)
+    });
+    setSuggestions([]);
+    setShowSuggestions(false);
 }
 
     return (
         <DashboardLayout>
             <div className="user-dashboard">
                 <div className="dashboard-top">
-                <div className="location-search">
-                <button className="location-button" onClick={getMyLocation}><img src="./location.png"/></button>
-                <input type="text" value={location} placeholder="Please click/enter your location" onChange={(event) =>setLocation(event.target.value)}/>
-                <button className="location-button" onClick={searchLocation}><img src="./search.webp"/></button>
-                </div>
-                
-                <button className="profile-button" onClick={() => setShowProfile(true)}>
-                    <span><img src="./profile.webp"/></span>
-                </button>
+             <div className="location-search">
 
-                </div>
+            <button className="location-button" onClick={getMyLocation}>
+                <img src="./location.png" alt="My location" />
+            </button>
 
+            <div className="dashboard-location-input">
+                <input type="text" value={location} placeholder="Search for a location" onChange={handleLocationChange}/>
+                    {showSuggestions && suggestions.length > 0 && (
+                        <div className="dashboard-location-suggestions">
+                            {suggestions.map((place, index) => (
+                                <div key={index} className="dashboard-location-suggestion" onClick={() => selectLocation(place)}>{place.name}</div>
+                            ))}
+
+                        </div>
+                    )}
+                </div>
+            </div>
+                </div>
                 {showProfile && (
                     <div className="profile-modal-overlay">
                         <div className="profile-modal">

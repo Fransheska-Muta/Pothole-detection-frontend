@@ -11,6 +11,9 @@ function Report() {
     const [description, setDescription] = useState("");
     const [severity, setSeverity] = useState("");
     const [image, setImage] = useState(null);
+    const [suggestions, setSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [selectedCoordinates, setSelectedCoordinates] = useState({latitude: null,longitude: null})
 
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0];
@@ -19,10 +22,10 @@ function Report() {
         }
     }
 const handleSubmit = async (event) => {
-
     event.preventDefault();
+
     if (!location.trim()) {
-        alert("Please enter the location.");
+        alert("Please enter the location.")
         return
     }
     if (!severity) {
@@ -60,8 +63,8 @@ const handleSubmit = async (event) => {
 
         const formData = new FormData();
         formData.append("location", location);
-        formData.append("latitude",latitude)
-        formData.append("longitude",longitude)
+        formData.append("latitude",selectedCoordinates.latitude)
+        formData.append("longitude", selectedCoordinates.longitude)
         formData.append("severity",severity)
         formData.append("description",description)
         formData.append("image",image)
@@ -89,6 +92,59 @@ const handleSubmit = async (event) => {
         alert("Unable to submit report.")
     }
 }
+    
+    const handleLocationChange = async (event) => {
+    const value = event.target.value;
+    setLocation(value);
+
+    if (value.trim().length < 3) {
+        setSuggestions([]);
+        setShowSuggestions(false);
+        return
+    }
+
+    try {
+    const response = await fetch(`http://localhost:3000/geocode/suggestions?address=${encodeURIComponent(value)}`,{
+        headers: {Authorization: `Bearer ${user?.token}`}}
+    )
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.error(data.message);
+            return
+        }
+        setSuggestions(data);
+        setShowSuggestions(true);
+       console.log("Suggestions received:", data);
+    } catch (error) {
+      console.error("Error getting location suggestions:",error)
+    }
+}
+
+const selectLocation = (place) => {
+
+    setLocation(place.name);
+
+
+    setSelectedCoordinates({
+
+        latitude: place.latitude,
+
+        longitude: place.longitude
+
+    });
+
+    console.log("Selected place:", place);
+    console.log("Coordinates:", {
+    latitude: place.latitude,
+    longitude: place.longitude
+});
+
+    setSuggestions([]);
+    setShowSuggestions(false);
+
+}
+
     return (
         <DashboardLayout>
             <div className="report-page">
@@ -98,7 +154,15 @@ const handleSubmit = async (event) => {
                     <label>Location:</label>
                     <div className="location-input">
                         <span className="location-icon"><img src="./location.png"/></span>
-                        <input type="text" value={location} onChange={(event) =>setLocation(event.target.value)}placeholder="Turffontein"/>
+                        <input type="text" value={location} onChange={ handleLocationChange  }placeholder="Enter Location"/>
+                        {showSuggestions && suggestions.length > 0 && (
+                        <div className="location-suggestions">
+                            {suggestions.map((place, index) => (
+                                <div key={index} className="location-suggestion" onClick={() => selectLocation(place)}>{place.name}
+                                </div>
+                            ))}
+                        </div>
+                    )}
                     </div>
 
                     </div>
