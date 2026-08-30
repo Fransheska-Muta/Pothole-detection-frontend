@@ -122,27 +122,19 @@ const handleSubmit = async (event) => {
 }
 
 const selectLocation = (place) => {
-
     setLocation(place.name);
-
-
     setSelectedCoordinates({
-
         latitude: place.latitude,
-
         longitude: place.longitude
-
-    });
+    })
 
     console.log("Selected place:", place);
     console.log("Coordinates:", {
     latitude: place.latitude,
     longitude: place.longitude
-});
-
+})
     setSuggestions([]);
     setShowSuggestions(false);
-
 }
 
     return (

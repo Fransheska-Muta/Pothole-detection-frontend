@@ -3,18 +3,17 @@
     padding: 30px;
 }
 
-.update-status-header {
-    margin-bottom: 25px;
+.update-status-header{
+    /* border: 2px solid red; */
+    width: 50%;
+    margin: auto;
 }
 
 .update-status-header h1 {
-    font-size: 30px;
-    margin: 0 0 8px 0;
-}
+    color: black;
+    font-size: 40px;
+    text-align: center;
 
-.update-status-header p {
-    color: #666;
-    margin: 0;
 }
 
 .update-status-card {
@@ -24,7 +23,7 @@
     padding: 25px;
     background-color: white;
     border-radius: 15px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 12px rgba(82, 14, 109, 0.747);
 }
 .update-image-container {
     width: 100%;
