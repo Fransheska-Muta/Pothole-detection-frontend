@@ -20,7 +20,7 @@ function Login({ showSignup }) {
         const data = await response.json();
           if (response.ok) {
            login(data); 
-        alert("Welcome Back!")
+        alert("You're back! Let's keep an eye on the road")
             navigate("/user")
             // console.log(data);              
         } else {

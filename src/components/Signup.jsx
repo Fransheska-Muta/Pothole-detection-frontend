@@ -1,8 +1,11 @@
 import { useState } from "react";
 import "../styling/Signup.css";
+import {useNavigate} from "react-router-dom"
+import {useAuth} from "../context/useAuth"
 
 function Signup({ showLogin }) {
-
+  const navigate = useNavigate()
+const {login} = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,24 +16,25 @@ function Signup({ showLogin }) {
      try {
         const response = await fetch("http://localhost:3000/signup", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-    },
-      body: JSON.stringify({name,email,password,confirmPassword,}),
-    });
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({name,email,password,confirmPassword})
+    })
       const data = await response.json();
         if (response.ok) {
-            alert("Account created successfully!");
-            
+            login(data);
+            alert("Welcome to SPDMS! Together, we're making roads safer");
+            navigate("/user")
             //resets the form to nothing in it
-        setName(""); setEmail(""); setPassword(""); setConfirmPassword(""); showLogin();
+        setName(""); setEmail(""); 
+        setPassword(""); setConfirmPassword(""); 
+        // showLogin();
     }else {
       alert(data.message);
     }}catch(error){
        console.error(error);
        alert("Unable to connect to the server.");
     }
-};
+}
      return (
         <>
         <div className="signup-container">

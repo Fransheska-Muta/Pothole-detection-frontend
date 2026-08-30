@@ -195,6 +195,9 @@ useEffect(() => {
                     )}
                 </div>
             </div>
+                <div className="profile-avatar">
+                <img src="./profile.webp" onClick={() => setShowProfile(true)}/>
+            </div>
                 </div>
                 {showProfile && (
                     <div className="profile-modal-overlay">
@@ -222,7 +225,6 @@ useEffect(() => {
                                 </div>
                                 <button className="logout" onClick={logout}> Logout</button>
                             </div>
-
                             <button className="profile-done" onClick={() => setShowProfile(false)}>Close </button>
                         </div>
                     </div>
