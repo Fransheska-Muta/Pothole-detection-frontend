@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "../styling/Signup.css";
 import {useNavigate} from "react-router-dom"
+import {useAuth} from "../context/useAuth"
 
 function Signup({ showLogin }) {
   const navigate = useNavigate()
+const {login} = useAuth();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,10 +21,13 @@ function Signup({ showLogin }) {
     })
       const data = await response.json();
         if (response.ok) {
+            login(data);
             alert("Welcome to SPDMS! Together, we're making roads safer");
             navigate("/user")
             //resets the form to nothing in it
-        setName(""); setEmail(""); setPassword(""); setConfirmPassword(""); showLogin();
+        setName(""); setEmail(""); 
+        setPassword(""); setConfirmPassword(""); 
+        // showLogin();
     }else {
       alert(data.message);
     }}catch(error){
