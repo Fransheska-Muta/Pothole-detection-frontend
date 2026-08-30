@@ -55,7 +55,6 @@ function UpdateStatus() {
             <div className="update-status-page">
                 <div className="update-status-header">
                     <h1>Update Status</h1>
-                    <p> Update the status of this pothole report.</p>
                 </div>
                 <div className="update-status-card">
                     <div className="update-image-container">
