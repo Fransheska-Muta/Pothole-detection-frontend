@@ -70,7 +70,7 @@ function UserDashboard() {
     useEffect(() => {
     const getReports = async () => {
         try {
-            const response = await fetch("http://localhost:3000/reports",{
+            const response = await fetch("http://13.220.52.27:3000/reports",{
                 headers: {Authorization:`Bearer ${user.token}`}
                 }
             )
@@ -144,7 +144,7 @@ useEffect(() => {
     }
 
     try {
-        const response = await fetch(`http://localhost:3000/geocode/suggestions?address=${encodeURIComponent(value)}`,{
+        const response = await fetch(`http://13.220.52.27:3000/geocode/suggestions?address=${encodeURIComponent(value)}`,{
         headers: {Authorization: `Bearer ${user.token}`}
         })
         const data = await response.json();
@@ -184,7 +184,7 @@ useEffect(() => {
             </button>
 
             <div className="dashboard-location-input">
-                <input type="text" value={location} placeholder="Search for a location" onChange={handleLocationChange}/>
+                <input type="text" value={location} placeholder="Search location" onChange={handleLocationChange}/>
                     {showSuggestions && suggestions.length > 0 && (
                         <div className="dashboard-location-suggestions">
                             {suggestions.map((place, index) => (
@@ -195,6 +195,7 @@ useEffect(() => {
                     )}
                 </div>
             </div>
+            {/* <h1> Welcome</h1> */}
                 <div className="profile-avatar">
                 <img src="./profile.webp" onClick={() => setShowProfile(true)}/>
             </div>

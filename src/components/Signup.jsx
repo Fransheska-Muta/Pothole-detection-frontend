@@ -14,7 +14,7 @@ const {login} = useAuth();
   const handleSignup = async (event) => {
     event.preventDefault();
      try {
-        const response = await fetch("http://localhost:3000/signup", {
+        const response = await fetch("http://13.220.52.27:3000/signup", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({name,email,password,confirmPassword})

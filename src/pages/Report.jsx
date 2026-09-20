@@ -47,7 +47,7 @@ const handleSubmit = async (event) => {
 
     try {
         //  finding the coordinatesz
-        const geocodeResponse = await fetch(`http://localhost:3000/geocode?address=${encodeURIComponent(location)}`,
+        const geocodeResponse = await fetch(`http://13.220.52.27:3000/geocode?address=${encodeURIComponent(location)}`,
          {headers: {Authorization: `Bearer ${user.token}`}}
         )
         const locationData =await geocodeResponse.json();
@@ -69,7 +69,7 @@ const handleSubmit = async (event) => {
         formData.append("description",description)
         formData.append("image",image)
 
-        const response = await fetch("http://localhost:3000/report",{ 
+        const response = await fetch("http://13.220.52.27:3000/report",{ 
             method: "POST",
             headers:{Authorization:`Bearer ${user.token}`},
             body: formData
@@ -104,7 +104,7 @@ const handleSubmit = async (event) => {
     }
 
     try {
-    const response = await fetch(`http://localhost:3000/geocode/suggestions?address=${encodeURIComponent(value)}`,{
+    const response = await fetch(`http://13.220.52.27:3000/geocode/suggestions?address=${encodeURIComponent(value)}`,{
         headers: {Authorization: `Bearer ${user?.token}`}}
     )
         const data = await response.json();

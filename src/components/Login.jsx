@@ -12,7 +12,7 @@ function Login({ showSignup }) {
     event.preventDefault();
      try {
         const credentials = btoa(`${email}:${password}`);
-        const response = await fetch("http://localhost:3000/login", {
+        const response = await fetch("http://13.220.52.27:3000/login", {
             method: "POST",
             headers: {
             Authorization: `Basic ${credentials}`

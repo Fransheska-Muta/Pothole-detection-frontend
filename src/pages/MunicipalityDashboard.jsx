@@ -20,7 +20,7 @@ function MunicipalityDashboard() {
     useEffect(() => {
     const getReports = async () => {
     try {
-        const response = await fetch("http://localhost:3000/municipality/reports",{
+        const response = await fetch("http://13.220.52.27:3000/municipality/reports",{
         headers: {Authorization:`Bearer ${user.token}`}})
         const data = await response.json();
         if (!response.ok) {
@@ -137,7 +137,7 @@ function MunicipalityDashboard() {
                 <button className="report-modal-close" onClick={closeModal}>x</button>
                 <h2>Report Details</h2>
                 <div className="report-image-section">
-                {selectedReport.image ? (<img src={`http://localhost:3000/uploads/${selectedReport.image}`} alt="Reported pothole" className="report-detail-image"/>
+                {selectedReport.image ? (<img src={`http://13.220.52.27:3000/uploads/${selectedReport.image}`} alt="Reported pothole" className="report-detail-image"/>
                 ) : (<div className="no-image">No image uploaded</div>)}
                 </div>
                 <div className="report-information">
