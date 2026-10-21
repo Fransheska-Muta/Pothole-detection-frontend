@@ -1,3 +1,2 @@
-const API_URL = "http://13.220.52.27:3000";
-
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 export default API_URL;

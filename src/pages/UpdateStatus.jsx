@@ -1,3 +1,4 @@
+import API_URL from "../config";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
@@ -17,7 +18,7 @@ function UpdateStatus() {
     }
 
     try {
-        const response = await fetch(`http://13.220.52.27:3000/reports/${report._id}/status`,
+        const response = await fetch(`${API_URL}/reports/${report._id}/status`,
             {
                 method: "PUT",
                 headers: {"Content-Type": "application/json",Authorization:`Bearer ${user.token}`},
@@ -59,7 +60,7 @@ function UpdateStatus() {
                 <div className="update-status-card">
                     <div className="update-image-container">
                         {report.image ? (
-                            <img src={`http://13.220.52.27:3000/uploads/${report.image}`} alt="Reported pothole" className="update-report-image"/>
+                            <img src={`${API_URL}/uploads/${report.image}`} alt="Reported pothole" className="update-report-image"/>
                         ) : (
                             <div className="no-report-image">No image uploaded</div>
                         )}

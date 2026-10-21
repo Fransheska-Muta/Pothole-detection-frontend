@@ -1,3 +1,4 @@
+import API_URL from "../config";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import "../styling/SuperAdminDashboard.css";
@@ -13,7 +14,7 @@ function SuperAdminDashboard() {
 useEffect(() => {
     async function getUsers() {
         try {
-            const response = await fetch( "http://13.220.52.27:3000/users", { headers: { Authorization: `Bearer ${user.token}`}});
+            const response = await fetch( `${API_URL}/users`, { headers: { Authorization: `Bearer ${user.token}`}});
             const data = await response.json();
             setUsers(data);
         } catch (error) {
@@ -34,7 +35,7 @@ const handlePromote = async () => {
         return
     }
     try {
-        const response = await fetch("http://13.220.52.27:3000/users/promote",
+        const response = await fetch(`${API_URL}/users/promote`,
             {
                 method: "PUT",
                 headers: { Authorization: `Bearer ${user.token}`,"Content-Type": "application/json"},
@@ -67,7 +68,7 @@ const handleDemote = async (email) => {
         return
     }
     try {
-        const response = await fetch("http://13.220.52.27:3000/users/demote",
+        const response = await fetch(`${API_URL}/users/demote`,
             {
               method: "PUT",
               headers: {Authorization: `Bearer ${user.token}`,"Content-Type": "application/json"},

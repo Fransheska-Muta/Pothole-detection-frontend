@@ -1,3 +1,4 @@
+import API_URL from "../config";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/useAuth";
 import DashboardLayout from "../components/DashboardLayout";
@@ -70,7 +71,7 @@ function UserDashboard() {
     useEffect(() => {
     const getReports = async () => {
         try {
-            const response = await fetch("http://13.220.52.27:3000/reports",{
+            const response = await fetch(`${API_URL}/reports`,{
                 headers: {Authorization:`Bearer ${user.token}`}
                 }
             )
@@ -144,7 +145,7 @@ useEffect(() => {
     }
 
     try {
-        const response = await fetch(`http://13.220.52.27:3000/geocode/suggestions?address=${encodeURIComponent(value)}`,{
+        const response = await fetch(`${API_URL}/geocode/suggestions?address=${encodeURIComponent(value)}`,{
         headers: {Authorization: `Bearer ${user.token}`}
         })
         const data = await response.json();

@@ -1,3 +1,4 @@
+import API_URL from "../config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
@@ -12,7 +13,7 @@ function Login({ showSignup }) {
     event.preventDefault();
      try {
         const credentials = btoa(`${email}:${password}`);
-        const response = await fetch("http://13.220.52.27:3000/login", {
+        const response = await fetch(`${API_URL}/login`, {
             method: "POST",
             headers: {
             Authorization: `Basic ${credentials}`

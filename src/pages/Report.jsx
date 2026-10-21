@@ -1,3 +1,4 @@
+import API_URL from "../config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
@@ -47,7 +48,7 @@ const handleSubmit = async (event) => {
 
     try {
         //  finding the coordinatesz
-        const geocodeResponse = await fetch(`http://13.220.52.27:3000/geocode?address=${encodeURIComponent(location)}`,
+        const geocodeResponse = await fetch(`${API_URL}/geocode?address=${encodeURIComponent(location)}`,
          {headers: {Authorization: `Bearer ${user.token}`}}
         )
         const locationData =await geocodeResponse.json();
@@ -69,7 +70,7 @@ const handleSubmit = async (event) => {
         formData.append("description",description)
         formData.append("image",image)
 
-        const response = await fetch("http://13.220.52.27:3000/report",{ 
+        const response = await fetch(`${API_URL}/report`,{ 
             method: "POST",
             headers:{Authorization:`Bearer ${user.token}`},
             body: formData
@@ -104,7 +105,7 @@ const handleSubmit = async (event) => {
     }
 
     try {
-    const response = await fetch(`http://13.220.52.27:3000/geocode/suggestions?address=${encodeURIComponent(value)}`,{
+    const response = await fetch(`${API_URL}/geocode/suggestions?address=${encodeURIComponent(value)}`,{
         headers: {Authorization: `Bearer ${user?.token}`}}
     )
         const data = await response.json();
