@@ -1,3 +1,4 @@
+import { imageSrc } from "../config";
 import API_URL from "../config";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +21,7 @@ function MunicipalityDashboard() {
 
     useEffect(() => {
     const getReports = async () => {
-    try {
+   try {
         const response = await fetch(`${API_URL}/municipality/reports`,{
         headers: {Authorization:`Bearer ${user.token}`}})
         const data = await response.json();
@@ -138,7 +139,7 @@ function MunicipalityDashboard() {
                 <button className="report-modal-close" onClick={closeModal}>x</button>
                 <h2>Report Details</h2>
                 <div className="report-image-section">
-                {selectedReport.image ? (<img src={`${API_URL}/uploads/${selectedReport.image}`} alt="Reported pothole" className="report-detail-image"/>
+                {selectedReport.image ? (<img src={imageSrc(selectedReport.image)} alt="Reported pothole" className="report-detail-image"/>
                 ) : (<div className="no-image">No image uploaded</div>)}
                 </div>
                 <div className="report-information">

@@ -1,3 +1,4 @@
+import { imageSrc } from "../config";
 import API_URL from "../config";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -60,7 +61,7 @@ function UpdateStatus() {
                 <div className="update-status-card">
                     <div className="update-image-container">
                         {report.image ? (
-                            <img src={`${API_URL}/uploads/${report.image}`} alt="Reported pothole" className="update-report-image"/>
+                            <img src={imageSrc(report.image)} alt="Reported pothole" className="update-report-image"/>
                         ) : (
                             <div className="no-report-image">No image uploaded</div>
                         )}
