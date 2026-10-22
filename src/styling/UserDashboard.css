@@ -2,9 +2,12 @@
     position: relative;
     flex: 1;
     min-width: 0;
+    /* border: 2px solid red; */
 }
 
 .dashboard-location-input input {
+    /* border: 2px solid red; */
+    /* margin: auto; */
     width: 100%;
     box-sizing: border-box;
 }
@@ -266,9 +269,11 @@
     justify-content:space-around;
     align-items: center;
     margin-bottom: 30px;
+    margin-left: 35px;
 }
 
 .location-search {
+    /* border: 2px solid red; */
     width: 65%;
     height: 50px;
     border: 3px solid #661477;
@@ -279,6 +284,7 @@
 }
 
 .location-search input {
+    border: 2px solid red;
     flex: 1;
     border: none;
     outline: none;
@@ -287,6 +293,7 @@
 }
 
 .location-button {
+    /* border: 2px solid red; */
     width: 50px;
     height: 50px;
     border: none;
@@ -323,23 +330,26 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 20px 400px;
+    margin: auto;
 }
 
 .detection-message {
-    background-color: #ffc94f;
+    background-color: #e4a513;
     border: 3px solid rgb(0, 0, 0);
     border-radius: 30px;
-    padding: 10px 25px;
+    color: black;
+    width: 100%;
+    padding: 10px 20px;
+    /* text-align: center; */
     font-weight: bold;
     font-size: 14px;
 }
 
 .report-pothole-button {
-    width: 310px;
+    width: 335px;
     height: 45px;
     background-color: #08aa4b;
-    color: white;
+    color: black;
     border: 3px solid black;
     border-radius: 30px;
     font-size: 15px;
