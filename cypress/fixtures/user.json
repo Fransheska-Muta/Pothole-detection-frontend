@@ -1,0 +1,7 @@
+{
+  "id": "64f000000000000000000001",
+  "name": "Wednesday Adams",
+  "email": "wednesdayadams@example.com",
+  "role": "user",
+  "token": "fake-jwt-token-for-tests"
+}
