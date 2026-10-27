@@ -298,6 +298,7 @@
     height: 50px;
     border: none;
     background: transparent;
+    /* background-color: #e4a513; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -309,6 +310,7 @@
     width: 25px;
     height: 25px;
     object-fit: contain;
+    /* border: 2px solid red; */
 }
 
 .map-container {
@@ -326,19 +328,20 @@
 
 .detection-section, .report-section{
     /* border: 2px solid red; */
-    width: 400px;
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: auto;
+    margin-top: 20px;
 }
 
 .detection-message {
     background-color: #e4a513;
-    border: 3px solid rgb(0, 0, 0);
-    border-radius: 30px;
+    /* border: 2px solid red; */
+    /* border: 3px solid rgb(0, 0, 0); */
+    /* border-radius: 30px; */
     color: black;
-    width: 100%;
+    width: 85%;
     padding: 10px 20px;
     /* text-align: center; */
     font-weight: bold;
@@ -346,19 +349,17 @@
 }
 
 .report-pothole-button {
-    width: 335px;
+    width: 35%;
     height: 45px;
-    background-color: #08aa4b;
-    color: black;
-    border: 3px solid black;
+    background-color: rgb(22, 122, 22) !important;
+    /* color: rgb(255, 255, 255) !important; */
+    box-shadow: none !important;
+    border: none  !important;
     border-radius: 30px;
     font-size: 15px;
     font-weight: bold;
     cursor: pointer;
-}
-
-.report-pothole-button:hover {
-    background-color: #34ad66;
+    margin: auto;
 }
 
 @media screen and (max-width: 900px) {

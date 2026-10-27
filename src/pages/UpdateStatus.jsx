@@ -3,6 +3,7 @@ import API_URL from "../config";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
+import ButtonLoader from "../components/ButtonLoader";
 import { useAuth } from "../context/useAuth";
 import "../styling/UpdateStatus.css";
 
@@ -12,12 +13,14 @@ function UpdateStatus() {
     const location = useLocation();
     const report = location.state?.report;
     const [status, setStatus] = useState(report?.status || "Pending")
+    const [updating, setUpdating] = useState(false);
     const handleUpdateStatus = async () => {
     if (!status) {
         alert("Please select a status.")
         return
     }
 
+    setUpdating(true);
     try {
         const response = await fetch(`${API_URL}/reports/${report._id}/status`,
             {
@@ -38,6 +41,8 @@ function UpdateStatus() {
         alert(
             "Unable to update report status."
         )
+    } finally {
+        setUpdating(false);
     }
 }
 // if someone hasnt selected a report first
@@ -95,7 +100,9 @@ function UpdateStatus() {
                     </div>
                     <div className="update-status-actions">
                         <button className="back-button" onClick={() =>navigate("/municipality")}>Cancel</button>
-                    <button className="update-button" onClick={handleUpdateStatus}>Update Status</button>
+                    <button className={`update-button${updating ? " is-loading" : ""}`} onClick={handleUpdateStatus} disabled={updating}>
+                        <ButtonLoader loading={updating} loadingText="Updating...">Update Status</ButtonLoader>
+                    </button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,347 @@
+/* ===== Road scene: dusk sky, skyline, road, taxi, warning sign, pothole ===== */
+:root {
+    --rs-car-left: 7%;
+    --rs-lane: 12%;       /* height of the wheels' contact line above the bottom */
+    --rs-road-h: 34%;     /* height of the asphalt band */
+    --rs-yellow: #ffc82c;
+}
+
+.road-scene-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    container-type: inline-size;
+    --rs-front-wheel: calc(var(--rs-car-left) + 11.6em);
+    --rs-pothole-x: calc(var(--rs-front-wheel) + 10em);
+}
+
+.road-scene-wrap.is-driving {
+    --rs-pothole-x: var(--rs-front-wheel);
+}
+
+.road-scene {
+    position: absolute;
+    inset: 0;
+    font-size: 14px;
+    font-size: 2.55cqw; /* everything below is sized in em, so it scales with the width */
+}
+
+.road-scene > * {
+    position: absolute;
+}
+
+/* ---- sky ---- */
+.rs-sky {
+    inset: 0 0 var(--rs-road-h) 0;
+    background: linear-gradient(180deg, #0e0322 0%, #2b0a49 38%, #6a1b86 62%, #d2488f 86%, #ff9a52 100%);
+}
+
+.rs-stars {
+    position: absolute;
+    inset: 0 0 35% 0;
+    background-image:
+        radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 28% 8%, #fff, transparent),
+        radial-gradient(1px 1px at 41% 24%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 57% 12%, #fff, transparent),
+        radial-gradient(1px 1px at 69% 30%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 82% 10%, #fff, transparent),
+        radial-gradient(1px 1px at 91% 26%, #fff, transparent),
+        radial-gradient(1px 1px at 6% 36%, #fff, transparent);
+    animation: rs-twinkle 3s ease-in-out infinite alternate;
+}
+
+.rs-sun {
+    left: 70%;
+    bottom: var(--rs-road-h);
+    width: 14em;
+    height: 14em;
+    border-radius: 50%;
+    transform: translate(-50%, 50%);
+    background: radial-gradient(circle, #fff0b3 0, #ffc54d 28%, rgba(255, 140, 60, 0.55) 48%, rgba(255, 140, 60, 0) 70%);
+}
+
+/* ---- skyline (tiles repeat so they can scroll forever) ---- */
+.rs-skyline {
+    left: 0;
+    right: 0;
+    bottom: var(--rs-road-h);
+    height: 10em;
+    background-repeat: repeat-x;
+    background-size: 40em 10em;
+    background-position: 0 100%;
+}
+
+.rs-skyline-far {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='120' viewBox='0 0 480 120'%3E%3Crect x='0' y='83' width='34' height='37' fill='%233a0f5c'/%3E%3Crect x='37' y='89' width='44' height='31' fill='%233a0f5c'/%3E%3Crect x='81' y='86' width='41' height='34' fill='%233a0f5c'/%3E%3Crect x='124' y='89' width='42' height='31' fill='%233a0f5c'/%3E%3Crect x='170' y='90' width='30' height='30' fill='%233a0f5c'/%3E%3Crect x='200' y='66' width='37' height='54' fill='%233a0f5c'/%3E%3Crect x='237' y='87' width='31' height='33' fill='%233a0f5c'/%3E%3Crect x='272' y='89' width='37' height='31' fill='%233a0f5c'/%3E%3Crect x='313' y='78' width='27' height='42' fill='%233a0f5c'/%3E%3Crect x='345' y='55' width='44' height='65' fill='%233a0f5c'/%3E%3Crect x='389' y='55' width='42' height='65' fill='%233a0f5c'/%3E%3Crect x='434' y='78' width='25' height='42' fill='%233a0f5c'/%3E%3Crect x='459' y='84' width='21' height='36' fill='%233a0f5c'/%3E%3C/svg%3E");
+    opacity: 0.9;
+}
+
+.rs-skyline-near {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='120' viewBox='0 0 480 120'%3E%3Crect x='0' y='31' width='25' height='89' fill='%23200a36'/%3E%3Crect x='5' y='75' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='14' y='51' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='14' y='63' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='14' y='99' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='26' y='79' width='27' height='41' fill='%23200a36'/%3E%3Crect x='57' y='70' width='35' height='50' fill='%23200a36'/%3E%3Crect x='62' y='102' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='71' y='90' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='80' y='78' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='80' y='90' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='95' y='65' width='35' height='55' fill='%23200a36'/%3E%3Crect x='100' y='73' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='100' y='85' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='100' y='109' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='109' y='85' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='130' y='24' width='37' height='96' fill='%23200a36'/%3E%3Crect x='135' y='68' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='144' y='68' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='144' y='92' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='153' y='44' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='153' y='56' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='171' y='61' width='23' height='59' fill='%23200a36'/%3E%3Crect x='185' y='93' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='185' y='105' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='195' y='37' width='33' height='83' fill='%23200a36'/%3E%3Crect x='200' y='45' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='200' y='57' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='200' y='93' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='209' y='45' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='209' y='69' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='218' y='57' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='228' y='78' width='29' height='42' fill='%23200a36'/%3E%3Crect x='233' y='110' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='242' y='86' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='262' y='65' width='24' height='55' fill='%23200a36'/%3E%3Crect x='267' y='97' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='276' y='97' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='276' y='109' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='288' y='37' width='24' height='83' fill='%23200a36'/%3E%3Crect x='302' y='45' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='302' y='69' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='302' y='105' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='316' y='53' width='30' height='67' fill='%23200a36'/%3E%3Crect x='321' y='85' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='330' y='73' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='330' y='85' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='330' y='97' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='330' y='109' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='339' y='73' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='339' y='109' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='350' y='34' width='30' height='86' fill='%23200a36'/%3E%3Crect x='355' y='54' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='355' y='66' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='355' y='78' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='364' y='54' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='373' y='42' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='373' y='66' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='373' y='90' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='382' y='44' width='39' height='76' fill='%23200a36'/%3E%3Crect x='387' y='64' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='387' y='76' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='405' y='52' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='414' y='76' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='422' y='76' width='31' height='44' fill='%23200a36'/%3E%3Crect x='427' y='108' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='436' y='84' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='436' y='96' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='453' y='28' width='27' height='92' fill='%23200a36'/%3E%3Crect x='458' y='72' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='458' y='84' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='458' y='108' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3Crect x='467' y='36' width='3' height='4' fill='%23ffc82c' opacity='0.8'/%3E%3C/svg%3E");
+}
+
+/* ---- road ---- */
+.rs-road {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--rs-road-h);
+    background: linear-gradient(180deg, #2c3040 0%, #1a1d28 55%, #12141c 100%);
+}
+
+.rs-kerb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0.55em;
+    background: #8b8fa8;
+    box-shadow: 0 0.25em 0 #4a4e63;
+}
+
+.rs-dashes {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 38%;
+    height: 0.45em;
+    background: repeating-linear-gradient(90deg, var(--rs-yellow) 0 4em, transparent 4em 8em);
+    background-size: 8em 100%;
+}
+
+.rs-edge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 4%;
+    height: 0.25em;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* ---- sign + pothole (the part of the world that moves toward the car) ---- */
+.rs-world {
+    inset: 0;
+}
+
+.rs-pothole {
+    position: absolute;
+    left: var(--rs-pothole-x);
+    bottom: calc(var(--rs-lane) - 1.35em);
+    width: 11em;
+    height: 2.7em;
+    transform: translateX(-50%);
+    border-radius: 52% 48% 50% 50% / 60% 55% 45% 40%;
+    background: radial-gradient(ellipse at 50% 35%, #000 0%, #05060a 55%, #14161d 100%);
+    box-shadow: 0 0.15em 0 0.3em #474b60, inset 0 0.6em 0.9em #000;
+}
+
+.rs-sign {
+    position: absolute;
+    left: calc(var(--rs-pothole-x) + 6.5em);
+    bottom: calc(var(--rs-road-h) - 0.4em);
+    width: 4.2em;
+    height: 8em;
+    transform: translateX(-50%);
+}
+
+.rs-sign-pole {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0.35em;
+    height: 4.6em;
+    transform: translateX(-50%);
+    background: #8b8fa8;
+}
+
+.rs-sign-board {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4.2em;
+    height: 3.7em;
+    background: #171a23;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.rs-sign-board::before {
+    content: "";
+    position: absolute;
+    left: 0.65em;
+    right: 0.65em;
+    top: 0.65em;
+    bottom: 0.32em;
+    background: var(--rs-yellow);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.rs-sign-board span {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1.35em;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.5em;
+    line-height: 1;
+    color: #171a23;
+}
+
+/* ---- car ---- */
+.rs-car-wrap {
+    left: var(--rs-car-left);
+    bottom: var(--rs-lane);
+    width: 18em;
+    height: 5.6em;
+}
+
+.rs-car,
+.rs-car-body,
+.rs-car-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.rs-car {
+    transform-origin: 20% 100%;
+}
+
+.rs-wheel {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+/* ---- dust (only shows during the bump) ---- */
+.rs-dust-layer {
+    inset: 0;
+    pointer-events: none;
+}
+
+.rs-dust {
+    position: absolute;
+    left: var(--rs-pothole-x);
+    bottom: calc(var(--rs-lane) - 0.4em);
+    width: 2.6em;
+    height: 2.6em;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(220, 220, 235, 0.85), rgba(160, 160, 185, 0));
+    opacity: 0;
+}
+
+/* ===== calm mode (beside the forms) ===== */
+.road-scene-wrap:not(.is-driving) .rs-car-body {
+    animation: rs-idle 1.1s ease-in-out infinite;
+}
+
+.road-scene-wrap:not(.is-driving) .rs-beam {
+    animation: rs-beam 2.4s ease-in-out infinite alternate;
+}
+
+.road-scene-wrap:not(.is-driving) .rs-sign-board::before {
+    animation: rs-sign-pulse 1.4s ease-in-out infinite;
+}
+
+/* ===== driving mode (the login / signup transition) ===== */
+.is-driving .rs-car-wrap {
+    animation: rs-car-in 0.75s cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+.is-driving .rs-car {
+    animation: rs-jolt 0.85s ease-out 1.4s both;
+}
+
+.is-driving .rs-car-body {
+    animation: rs-idle 0.28s ease-in-out infinite;
+}
+
+.is-driving .rs-wheel {
+    animation: rs-spin 0.3s linear infinite;
+}
+
+.is-driving .rs-world {
+    animation: rs-world-in 1.4s cubic-bezier(0.22, 0.7, 0.35, 1) both;
+}
+
+.is-driving .rs-dashes {
+    animation: rs-dash-run 0.2s linear 7;
+}
+
+.is-driving .rs-skyline-far {
+    animation: rs-sky-far 6s linear 0s 0.2334 forwards;
+}
+
+.is-driving .rs-skyline-near {
+    animation: rs-sky-near 3s linear 0s 0.4667 forwards;
+}
+
+.is-driving .rs-dust-1 { animation: rs-puff-1 0.9s ease-out 1.4s both; }
+.is-driving .rs-dust-2 { animation: rs-puff-2 1s ease-out 1.42s both; }
+.is-driving .rs-dust-3 { animation: rs-puff-3 0.9s ease-out 1.45s both; }
+
+/* ===== keyframes ===== */
+@keyframes rs-twinkle { from { opacity: 0.45; } to { opacity: 1; } }
+
+@keyframes rs-idle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-0.12em); }
+}
+
+@keyframes rs-beam { from { opacity: 0.45; } to { opacity: 1; } }
+
+@keyframes rs-sign-pulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.35); }
+}
+
+@keyframes rs-spin { to { transform: rotate(360deg); } }
+
+@keyframes rs-car-in {
+    from { transform: translateX(-60em); }
+    to { transform: translateX(0); }
+}
+
+@keyframes rs-world-in {
+    from { transform: translateX(100cqw); }
+    to { transform: translateX(0); }
+}
+
+@keyframes rs-dash-run {
+    from { background-position: 0 0; }
+    to { background-position: -8em 0; }
+}
+
+@keyframes rs-sky-far {
+    from { background-position: 0 100%; }
+    to { background-position: -40em 100%; }
+}
+
+@keyframes rs-sky-near {
+    from { background-position: 0 100%; }
+    to { background-position: -40em 100%; }
+}
+
+/* the taxi's nose drops into the pothole, then bounces up and settles */
+@keyframes rs-jolt {
+    0%   { transform: rotate(0) translateY(0); }
+    22%  { transform: rotate(4deg) translateY(0.55em); }
+    50%  { transform: rotate(-6deg) translateY(-1.5em); }
+    72%  { transform: rotate(2deg) translateY(0.25em); }
+    100% { transform: rotate(0) translateY(0); }
+}
+
+@keyframes rs-puff-1 {
+    0%   { opacity: 0.9; transform: translate(-50%, 0) scale(0.4); }
+    100% { opacity: 0; transform: translate(-190%, -2.4em) scale(1.8); }
+}
+
+@keyframes rs-puff-2 {
+    0%   { opacity: 0.9; transform: translate(-50%, 0) scale(0.4); }
+    100% { opacity: 0; transform: translate(-10%, -3.2em) scale(2); }
+}
+
+@keyframes rs-puff-3 {
+    0%   { opacity: 0.9; transform: translate(-50%, 0) scale(0.4); }
+    100% { opacity: 0; transform: translate(90%, -2.2em) scale(1.7); }
+}

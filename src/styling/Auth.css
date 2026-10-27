@@ -1,0 +1,251 @@
+/* ===== Login + Sign up: shared "road" look =====
+   Same class names as before (login-* / signup-*), new look. */
+
+.login-container,
+.signup-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f7f5f0;
+}
+
+/* ---- form side ---- */
+.login-left,
+.signup-left {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 48px 24px;
+    background:
+        radial-gradient(circle at 12% 8%, rgba(112, 22, 163, 0.07), transparent 40%),
+        #f7f5f0;
+}
+
+/* hazard-stripe bar across the top, like roadworks tape */
+.login-left::before,
+.signup-left::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 12px;
+    background: repeating-linear-gradient(-45deg, #ffc82c 0 16px, #171a23 16px 32px);
+}
+
+.auth-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.auth-brand img {
+    width: 54px;
+    height: 36px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 10px;
+    padding: 3px 6px;
+    box-shadow: 0 2px 8px rgba(23, 26, 35, 0.15);
+}
+
+.auth-brand b {
+    font-size: 20px;
+    letter-spacing: 1.5px;
+    color: #171a23;
+}
+
+.login-left h1,
+.signup-left h1 {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #171a23;
+    text-align: center;
+}
+
+/* dashed yellow "centre line" under the title */
+.login-left h1::after,
+.signup-left h1::after {
+    content: "";
+    display: block;
+    width: 110px;
+    height: 6px;
+    margin: 10px auto 0;
+    background: repeating-linear-gradient(90deg, #ffc82c 0 18px, transparent 18px 28px);
+    border-radius: 3px;
+}
+
+.login-left form,
+.signup-left form {
+    display: grid;
+    width: min(360px, 100%);
+    margin-top: 14px;
+}
+
+.login-left label,
+.signup-left label {
+    margin-top: 12px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2e3342;
+}
+
+.login-left input,
+.signup-left input {
+    height: 48px;
+    background: #fff;
+    border: 2px solid #2e3342;
+    color: #171a23;
+    border-radius: 14px;
+    padding: 0 16px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.login-left input:focus,
+.signup-left input:focus {
+    border-color: #7016a3;
+    box-shadow: 0 0 0 4px rgba(112, 22, 163, 0.18);
+}
+
+/* chunky "road sign" button that presses down when clicked */
+.login-left button,
+.signup-left button {
+    margin-top: 30px;
+    height: 50px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #7016a3 0%, #5d1578 100%);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #3b0d4d;
+    transition: transform 0.12s, box-shadow 0.12s, filter 0.2s;
+}
+
+.login-left button:hover:not(:disabled),
+.signup-left button:hover:not(:disabled) {
+    filter: brightness(1.12);
+}
+
+.login-left button:active:not(:disabled),
+.signup-left button:active:not(:disabled) {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 #3b0d4d;
+}
+
+.login-left button:disabled,
+.signup-left button:disabled {
+    transform: translateY(2px);
+    box-shadow: 0 3px 0 #3b0d4d;
+    filter: saturate(0.8);
+}
+
+.login-left p,
+.signup-left p {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 14px;
+    color: #2e3342;
+}
+
+.login-left p span,
+.signup-left p span {
+    color: #7016a3;
+    cursor: pointer;
+    font-weight: 700;
+    margin-left: 4px;
+}
+
+.login-left p span:hover,
+.signup-left p span:hover {
+    text-decoration: underline;
+}
+
+/* ---- scene side ---- */
+.login-right,
+.signup-right {
+    position: relative;
+    flex: 0 0 52%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 11vh;
+    background: #12042a;
+}
+
+.login-right h2,
+.signup-right h2 {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    font-size: clamp(34px, 4.6vw, 62px);
+    font-weight: 800;
+    line-height: 1.08;
+    text-align: center;
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.45);
+}
+
+.auth-blurb {
+    position: relative;
+    z-index: 2;
+    margin-top: 14px;
+    padding: 0 24px;
+    max-width: 420px;
+    text-align: center;
+    font-size: clamp(14px, 1.4vw, 18px);
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+}
+
+/* ---- tablets ---- */
+@media screen and (max-width: 1024px) {
+    .login-left h1,
+    .signup-left h1 { font-size: 34px; }
+}
+
+/* ---- phones: the road becomes a banner above the form ---- */
+@media screen and (max-width: 768px) {
+    .login-container,
+    .signup-container { flex-direction: column; }
+
+    .login-right,
+    .signup-right {
+        order: -1;
+        flex: 0 0 auto;
+        width: 100%;
+        height: 230px;
+        padding-top: 22px;
+    }
+
+    .login-right h2,
+    .signup-right h2 { font-size: 30px; }
+
+    .auth-blurb { display: none; }
+
+    .login-left,
+    .signup-left { padding: 36px 20px 40px; }
+
+    .login-left h1,
+    .signup-left h1 { font-size: 30px; }
+}
+
+@media screen and (max-width: 480px) {
+    .login-right,
+    .signup-right { height: 200px; }
+
+    .login-left input,
+    .signup-left input { height: 44px; font-size: 14px; }
+
+    .login-left button,
+    .signup-left button { height: 46px; font-size: 16px; }
+}

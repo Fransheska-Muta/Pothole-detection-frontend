@@ -1,6 +1,9 @@
 import API_URL from "../config";
 import { useState } from "react";
-import "../styling/Signup.css";
+import "../styling/Auth.css";
+import ButtonLoader from "./ButtonLoader";
+import RoadScene from "./RoadScene";
+import DriveTransition from "./DriveTransition";
 import {useNavigate} from "react-router-dom"
 import {useAuth} from "../context/useAuth"
 
@@ -11,9 +14,12 @@ const {login} = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [driving, setDriving] = useState(false);
 
   const handleSignup = async (event) => {
     event.preventDefault();
+    setLoading(true);
      try {
         const response = await fetch(`${API_URL}/signup`, {
           method: "POST",
@@ -24,7 +30,7 @@ const {login} = useAuth();
         if (response.ok) {
             login(data);
             alert("Welcome to SPDMS! Together, we're making roads safer");
-            navigate("/user")
+            setDriving(true) // the drive animation navigates to /user when it ends
             //resets the form to nothing in it
         setName(""); setEmail(""); 
         setPassword(""); setConfirmPassword(""); 
@@ -34,12 +40,15 @@ const {login} = useAuth();
     }}catch(error){
        console.error(error);
        alert("Unable to connect to the server.");
+    } finally {
+       setLoading(false);
     }
 }
      return (
         <>
         <div className="signup-container">
             <div className="signup-left">
+                <div className="auth-brand"><img src="/LOGO.webp" alt="SPDMS logo" /><b>SPDMS</b></div>
                 <h1>SIGN UP</h1>
 
                 <form onSubmit={handleSignup}>
@@ -55,16 +64,21 @@ const {login} = useAuth();
                     <label htmlFor="confirm">Confirm Password</label>
                     <input type="password" value={confirmPassword} name="confirm" onChange={(event)=>setConfirmPassword(event.target.value)}/>
                     
-                    <button type="submit"> Sign Up </button>
+                    <button type="submit" disabled={loading} className={loading ? "is-loading" : ""}>
+                        <ButtonLoader loading={loading} loadingText="Creating account...">Sign Up</ButtonLoader>
+                    </button>
                     <p> Already have an account? <span onClick={showLogin}> Login </span> </p>
                 </form>
             </div>
             <div className="signup-right">
-                <div className="circle top"></div>
-                <div className="circle bottom"></div>
+                <RoadScene />
                 <h2> Hey, <br/> Welcome</h2>
+                <p className="auth-blurb">Spot a pothole. Report it. Get it fixed.</p>
             </div>
         </div>
+        {driving && (
+            <DriveTransition message="Welcome aboard! Let's make the roads safer..." onComplete={() => navigate("/user")} />
+        )}
 </>
     );
 }

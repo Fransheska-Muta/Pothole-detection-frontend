@@ -1,0 +1,105 @@
+/* ===== "Drive to the dashboard" transition =====
+   Timeline (matches DRIVE_MS = 2800 in DriveTransition.jsx):
+   0.00s  overlay fades in, taxi drives in, road rushes past
+   1.40s  pothole reaches the front wheel -> BUMP, dust, taxi jolts
+   1.95s  camera zooms into the pothole
+   2.45s  fade to dark   2.80s  navigate to the dashboard            */
+.drive-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    overflow: hidden;
+    background: #12042a;
+    container-type: inline-size;
+    animation: drive-in 0.25s ease-out both;
+}
+
+.drive-zoom {
+    position: absolute;
+    inset: 0;
+    font-size: 14px;
+    font-size: 2.55cqw;
+    /* zoom into the dark middle of the pothole, just below the front wheel */
+    transform-origin: calc(7% + 11.6em) 92%;
+    animation: drive-zoom 0.85s cubic-bezier(0.65, 0, 0.95, 0.55) 1.95s both;
+    will-change: transform;
+}
+
+.drive-bump {
+    position: absolute;
+    left: calc(7% + 11.6em);
+    bottom: 26%;
+    transform: translateX(-50%) rotate(-8deg);
+    font-size: clamp(28px, 6vw, 90px);
+    font-weight: 800;
+    color: #ffc82c;
+    text-shadow: 0.05em 0.05em 0 #171a23, 0 0 0.4em rgba(255, 200, 44, 0.6);
+    opacity: 0;
+    animation: drive-bump 0.6s ease-out 1.4s both;
+}
+
+.drive-message {
+    position: absolute;
+    top: 11%;
+    left: 0;
+    right: 0;
+    padding: 0 6%;
+    text-align: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: clamp(22px, 4vw, 48px);
+    line-height: 1.15;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
+    animation: drive-msg-in 0.5s ease-out 0.25s both, drive-msg-out 0.3s ease-in 1.9s forwards;
+}
+
+.drive-fade {
+    position: absolute;
+    inset: 0;
+    background: #0f1118;
+    opacity: 0;
+    animation: drive-fade 0.35s ease-in 2.45s both;
+}
+
+.drive-overlay.reduced {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    justify-content: center;
+    background: #171a23;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    padding: 24px;
+}
+
+.drive-overlay.reduced .btn-spinner {
+    width: 34px;
+    height: 34px;
+    color: #ffc82c;
+}
+
+@keyframes drive-in { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes drive-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(30); }
+}
+
+@keyframes drive-bump {
+    0%   { opacity: 0; transform: translateX(-50%) rotate(-8deg) scale(0.3); }
+    30%  { opacity: 1; transform: translateX(-50%) rotate(-8deg) scale(1.25); }
+    70%  { opacity: 1; transform: translateX(-50%) rotate(-8deg) scale(1); }
+    100% { opacity: 0; transform: translateX(-50%) rotate(-8deg) scale(1.05); }
+}
+
+@keyframes drive-msg-in {
+    from { opacity: 0; transform: translateY(-14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes drive-msg-out { to { opacity: 0; } }
+
+@keyframes drive-fade { from { opacity: 0; } to { opacity: 1; } }

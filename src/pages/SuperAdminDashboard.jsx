@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import "../styling/SuperAdminDashboard.css";
 import DashboardLayout from "../components/DashboardLayout"
+import ButtonLoader from "../components/ButtonLoader";
 
 function SuperAdminDashboard() {
     const {user, logout} = useAuth();
@@ -10,6 +11,8 @@ function SuperAdminDashboard() {
     const [showModal, setShowModal] = useState(false)
     const [email, setEmail] = useState("");
     const [role, setRole] = useState("user");
+    const [promoting, setPromoting] = useState(false);
+    const [demotingEmail, setDemotingEmail] = useState(null);
 
 useEffect(() => {
     async function getUsers() {
@@ -34,6 +37,7 @@ const handlePromote = async () => {
         alert("Please select a role");
         return
     }
+    setPromoting(true);
     try {
         const response = await fetch(`${API_URL}/users/promote`,
             {
@@ -60,6 +64,8 @@ const handlePromote = async () => {
         );
 
         alert("Unable to promote user.");
+    } finally {
+        setPromoting(false);
     }
 }
 const handleDemote = async (email) => {
@@ -67,6 +73,7 @@ const handleDemote = async (email) => {
     if (!confirmDemote) {
         return
     }
+    setDemotingEmail(email);
     try {
         const response = await fetch(`${API_URL}/users/demote`,
             {
@@ -86,6 +93,8 @@ const handleDemote = async (email) => {
     } catch (error) {
         console.error("Demotion error:",error);
         alert("Unable to demote user.");
+    } finally {
+        setDemotingEmail(null);
     }
 }
 
@@ -113,7 +122,7 @@ return (
                             <td>{user.name}</td>
                             <td>{user.email}</td>
                             <td>{user.role}</td>
-                            <td><button className="demote-button" onClick={()=> handleDemote(user.email)}>Remove Role</button></td>
+                            <td><button className={`demote-button${demotingEmail === user.email ? " is-loading" : ""}`} onClick={()=> handleDemote(user.email)} disabled={demotingEmail === user.email}><ButtonLoader loading={demotingEmail === user.email} loadingText="Removing...">Remove Role</ButtonLoader></button></td>
                         </tr>
                     ))}
                 </tbody>
@@ -139,7 +148,7 @@ return (
             <option value="municipality">Municipality </option>
             </select>
 
-            <button onClick={handlePromote}>Promote</button>
+            <button className={promoting ? "is-loading" : ""} onClick={handlePromote} disabled={promoting}><ButtonLoader loading={promoting} loadingText="Promoting...">Promote</ButtonLoader></button>
             <button className="cancel" onClick={() => setShowModal(false)}> Cancel </button>
         </div>
     </div>)}

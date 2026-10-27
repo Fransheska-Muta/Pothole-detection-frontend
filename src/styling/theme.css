@@ -1,0 +1,188 @@
+/* ===== SPDMS road theme =====
+   Loaded last (see main.jsx). Colours and small refinements shared by every page:
+   asphalt + safety-yellow accents on top of the existing purple brand colour. */
+
+:root {
+    --asphalt-900: #0f1118;
+    --asphalt-800: #171a23;
+    --asphalt-700: #222632;
+    --asphalt-600: #2e3342;
+    --line-yellow: #ffc82c;
+    --hazard-orange: #ff8a1f;
+    --brand: #7016a3;
+    --brand-deep: #5d1578;
+    --brand-darker: #4f0f74;
+    --paper: #f7f5f0;
+}
+
+body {
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+    background-color: var(--paper);
+    color: var(--asphalt-800);
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+/* ---- every dashboard page: roadworks tape along the top edge ---- */
+main::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    z-index: 1150;
+    pointer-events: none;
+    background: repeating-linear-gradient(-45deg, var(--line-yellow) 0 14px, var(--asphalt-800) 14px 28px);
+}
+
+/* ---- arriving from the drive animation: fade in from dark ---- */
+body.arriving main::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    pointer-events: none;
+    background: var(--asphalt-900);
+    animation: arrive-fade 0.9s ease-out forwards;
+}
+
+@keyframes arrive-fade {
+    from { opacity: 1; visibility: visible; }
+    99% { visibility: visible; }
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* ---- buttons: same layout as before, a bit more "road sign" ---- */
+.report-pothole-button {
+    background-color: var(--line-yellow);
+    color: var(--asphalt-900);
+    border: 3px solid var(--asphalt-900);
+    box-shadow: 0 5px 0 var(--asphalt-900);
+    transition: transform 0.12s, box-shadow 0.12s, background-color 0.2s;
+}
+
+.report-pothole-button:hover {
+    background-color: #ffd65c;
+}
+
+.report-pothole-button:active {
+    transform: translateY(4px);
+    box-shadow: 0 1px 0 var(--asphalt-900);
+}
+
+.submit-report,
+.update-button {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
+    box-shadow: 0 4px 0 #3b0d4d;
+    transition: transform 0.12s, box-shadow 0.12s, filter 0.2s;
+}
+
+.submit-report:hover:not(:disabled),
+.update-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
+    filter: brightness(1.12);
+}
+
+.submit-report:active:not(:disabled),
+.update-button:active:not(:disabled) {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #3b0d4d;
+}
+
+.submit-report:disabled,
+.update-button:disabled,
+.demote-button:disabled,
+.superadmin-container .modal button:disabled {
+    filter: saturate(0.75);
+}
+
+.location-button {
+    color: var(--brand);
+}
+
+.location-button .btn-spinner {
+    width: 24px;
+    height: 24px;
+}
+
+/* ---- page headings get a dashed centre-line underline ---- */
+.reports-header h1::after,
+.superadmin-container h1::after {
+    content: "";
+    display: block;
+    width: 90px;
+    height: 5px;
+    margin-top: 8px;
+    background: repeating-linear-gradient(90deg, var(--line-yellow) 0 16px, transparent 16px 24px);
+    border-radius: 3px;
+}
+
+.superadmin-container h1::after {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ---- municipality table: asphalt header ---- */
+.reports-table th {
+    background: var(--asphalt-800);
+    color: var(--line-yellow);
+}
+
+/* ---- cards and modals ---- */
+.profile-modal,
+.report-details-modal,
+.update-status-card {
+    border-top: 6px solid var(--line-yellow);
+}
+
+/* ---- 404: a road that keeps running ---- */
+.whole-thing {
+    background-color: var(--asphalt-800);
+    background-image: repeating-linear-gradient(90deg, var(--line-yellow) 0 70px, transparent 70px 140px);
+    background-size: 100% 8px;
+    background-repeat: repeat-x;
+    background-position: 0 84%;
+    animation: road-run 1.1s linear infinite;
+}
+
+.whole-thing::before,
+.whole-thing::after {
+    display: none;
+}
+
+.whole-thing h1 {
+    color: var(--line-yellow);
+    text-shadow: 6px 6px 0 var(--asphalt-900);
+}
+
+@keyframes road-run {
+    from { background-position: 0 84%; }
+    to { background-position: -140px 84%; }
+}
+
+.redirect {
+    background-color: var(--paper);
+}
+
+.redirect .button {
+    background-color: var(--line-yellow);
+    color: var(--asphalt-900);
+    border: 3px solid var(--asphalt-900);
+    box-shadow: 0 5px 0 var(--asphalt-900);
+}
+
+.redirect .button:hover {
+    background-color: #ffd65c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .whole-thing {
+        animation: none;
+    }
+}

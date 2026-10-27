@@ -1,0 +1,32 @@
+/* Spinner shown inside buttons while a request is in flight */
+.btn-spinner {
+    display: inline-block;
+    width: 1.05em;
+    height: 1.05em;
+    border-radius: 50%;
+    border: 2.5px solid currentColor;
+    border-right-color: transparent;
+    animation: btn-spin 0.7s linear infinite;
+    vertical-align: -0.17em;
+    flex-shrink: 0;
+}
+
+.btn-loading-text {
+    margin-left: 0.55em;
+}
+
+button:disabled {
+    cursor: progress;
+}
+
+button.is-loading {
+    opacity: 0.92;
+}
+
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-spinner { animation-duration: 1.6s; }
+}

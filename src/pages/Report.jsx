@@ -1,5 +1,6 @@
 import API_URL from "../config";
 import { useState } from "react";
+import ButtonLoader from "../components/ButtonLoader";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import DashboardLayout from "../components/DashboardLayout";
@@ -12,6 +13,7 @@ function Report() {
     const [description, setDescription] = useState("");
     const [severity, setSeverity] = useState("");
     const [image, setImage] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
     const [selectedCoordinates, setSelectedCoordinates] = useState({latitude: null,longitude: null})
@@ -46,6 +48,7 @@ const handleSubmit = async (event) => {
         return
     }
 
+    setSubmitting(true);
     try {
         //  finding the coordinatesz
         const geocodeResponse = await fetch(`${API_URL}/geocode?address=${encodeURIComponent(location)}`,
@@ -91,6 +94,8 @@ const handleSubmit = async (event) => {
     } catch (error) {
         console.error("Report error:",error)
         alert("Unable to submit report.")
+    } finally {
+        setSubmitting(false);
     }
 }
     
@@ -200,7 +205,9 @@ const selectLocation = (place) => {
                         </label>
                     </div>
 
-                    <button type="submit" className="submit-report">Submit</button>
+                    <button type="submit" className={`submit-report${submitting ? " is-loading" : ""}`} disabled={submitting}>
+                        <ButtonLoader loading={submitting} loadingText="Submitting...">Submit</ButtonLoader>
+                    </button>
                 </form>
             </div>
         </DashboardLayout>

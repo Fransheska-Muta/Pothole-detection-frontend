@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/useAuth";
 import DashboardLayout from "../components/DashboardLayout";
 import "../styling/UserDashboard.css";
+import "../styling/Loader.css";
 import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup, useMap} from "react-leaflet";
@@ -10,6 +11,12 @@ import L from "leaflet"
 // import "@fortawesome/fontawesome-free/css/all.min.css";
 
 const defaultLocation = [-26.2041, 28.0473];
+
+// A report only goes on the map / into the nearest-pothole check if both
+// coordinates are real numbers. Reports saved without a picked location can
+// hold null, "null" or "" - Leaflet crashes on those (Invalid LatLng NaN).
+const toCoordinate = (value) => (value === null || value === undefined || value === "" ? NaN : Number(value));
+const hasValidCoordinates = (report) => Number.isFinite(toCoordinate(report.latitude)) && Number.isFinite(toCoordinate(report.longitude));
 function ChangeMapLocation({ coordinates }) {
     const map = useMap();
     useEffect(() => {
@@ -56,6 +63,7 @@ function UserDashboard() {
     const [reports, setReports] = useState([])
     const [nearestPothole, setNearestPothole] = useState(null);
     const [suggestions, setSuggestions] = useState([]);
+    const [locating, setLocating] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
     // calculates teh distance betwen current position and nearest pothole
@@ -95,7 +103,7 @@ useEffect(() => {
     let closest = null;
     let shortestDistance = Infinity;
     reports.forEach((report) => {
-        if (report.latitude === null ||report.longitude === null ||report.latitude === undefined ||report.longitude === undefined) {
+        if (!hasValidCoordinates(report)) {
             return
         }
 
@@ -120,6 +128,7 @@ useEffect(() => {
             alert("Geolocation is not supported by your browser.");
             return
         }
+        setLocating(true);
         navigator.geolocation.getCurrentPosition(
             (position) => {
             const latitude = position.coords.latitude
@@ -128,7 +137,9 @@ useEffect(() => {
             // console.log("Longitude:", longitude)
             setCoordinates({ latitude, longitude})
             setLocation("My location")
-            }
+            setLocating(false)
+            },
+            () => setLocating(false) // permission denied / failed: stop the spinner
         )
 }
     const handleReport = () => {
@@ -180,8 +191,8 @@ useEffect(() => {
                 <div className="dashboard-top">
              <div className="location-search">
 
-            <button className="location-button" onClick={getMyLocation}>
-                <img src="./location.png" alt="My location" />
+            <button className={`location-button${locating ? " is-loading" : ""}`} onClick={getMyLocation} disabled={locating}>
+                {locating ? <span className="btn-spinner" aria-label="Finding your location"></span> : <img src="./location.png" alt="My location" />}
             </button>
 
             <div className="dashboard-location-input">
@@ -242,7 +253,7 @@ useEffect(() => {
                         </Marker>
                     )}
             {reports.map((report) => {
-            if ( report.latitude === null || report.latitude === undefined || report.longitude === null || report.longitude === undefined) {
+            if (!hasValidCoordinates(report)) {
                 return null
             }
             return (
@@ -282,7 +293,7 @@ useEffect(() => {
          </div>
 
          <div className="report-section">
-         <div className="location-button"><img src="camera.webp"/></div>
+         {/* <div className="location-button"><img src="camera.webp"/></div> */}
             <button className="report-pothole-button" onClick={handleReport}>Report Pothole</button>
             </div>
          </div >
