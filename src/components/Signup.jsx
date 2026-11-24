@@ -29,7 +29,7 @@ const {login} = useAuth();
       const data = await response.json();
         if (response.ok) {
             login(data);
-            alert("Welcome to SPDMS! Together, we're making roads safer");
+            // alert("Welcome to SPDMS! Together, we're making roads safer");
             setDriving(true) // the drive animation navigates to /user when it ends
             //resets the form to nothing in it
         setName(""); setEmail(""); 

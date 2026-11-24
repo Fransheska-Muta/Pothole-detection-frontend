@@ -2,10 +2,19 @@ import { imageSrc } from "../config";
 import API_URL from "../config";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ImageOutlinedIcon from "@mui/icons-material/ImageOutlined";
 import DashboardLayout from "../components/DashboardLayout";
 import ButtonLoader from "../components/ButtonLoader";
+import { SeverityBadge, StatusBadge } from "../components/Badges";
 import { useAuth } from "../context/useAuth";
 import "../styling/UpdateStatus.css";
+
+const STEPS = [
+    { value: "Pending", hint: "Waiting to be looked at" },
+    { value: "In Progress", hint: "Repair is under way" },
+    { value: "Resolved", hint: "Fixed and closed" }
+];
 
 function UpdateStatus() {
     const { user } = useAuth();
@@ -49,60 +58,74 @@ function UpdateStatus() {
     if (!report) {
         return (
             <DashboardLayout>
-                <div className="update-status-page">
-                    <h1>Update Status</h1>
-                    <p>No report was selected.</p>
-                    <button onClick={() => navigate("/municipality")}>Back to Reports</button>
+                <div className="dx-page update-status-page">
+                    <div className="dx-head">
+                        <div>
+                            <p className="dx-eyebrow">Municipality</p>
+                            <h1>Update Status</h1>
+                        </div>
+                    </div>
+                    <div className="dx-panel">
+                        <div className="dx-empty">
+                            <strong>No report selected</strong>
+                            Open a report from the list first, then choose Update Status.
+                            <div><button className="dx-btn" onClick={() => navigate("/municipality")}>Back to Reports</button></div>
+                        </div>
+                    </div>
                 </div>
             </DashboardLayout>
         )
     }
     return (
         <DashboardLayout>
-            <div className="update-status-page">
-                <div className="update-status-header">
-                    <h1>Update Status</h1>
+            <div className="dx-page update-status-page">
+                <div className="dx-head">
+                    <div>
+                        <button className="dx-back" onClick={() =>navigate("/municipality")}><ArrowBackIcon fontSize="small" /> All reports</button>
+                        <p className="dx-eyebrow">Municipality</p>
+                        <h1>Update Status</h1>
+                    </div>
                 </div>
                 <div className="update-status-card">
                     <div className="update-image-container">
                         {report.image ? (
                             <img src={imageSrc(report.image)} alt="Reported pothole" className="update-report-image"/>
                         ) : (
-                            <div className="no-report-image">No image uploaded</div>
+                            <div className="no-report-image"><ImageOutlinedIcon /> No image uploaded</div>
                         )}
                     </div>
                     <div className="update-report-information">
-                        <div className="update-field">
-                            <label>Location</label>
-                            <p>{report.location}</p>
-                        </div>
-                        <div className="update-field">
-                            <label>Severity
-                            </label>
-                            <p>{report.severity}</p>
-                        </div>
-                        <div className="update-field">
-                            <label>Description</label>
-                            <p>{report.description}</p>
-                        </div>
-                        <div className="update-field">
-                            <label>Current Status</label>
-                            <p>{report.status}</p>
-                        </div>
-                        <div className="update-field">
-                            <label>Update Status</label>
-                            <select value={status} onChange={(event) =>setStatus(event.target.value)}>
-                                <option value="Pending">Pending</option>
-                                <option value="In Progress">In Progress</option>
-                                <option value="Resolved">Resolved</option>
-                            </select>
+                        <div className="us-summary">
+                            <h2>{report.location}</h2>
+                            <div className="us-badges">
+                                <SeverityBadge value={report.severity} />
+                                <StatusBadge value={report.status} />
+                            </div>
+                            <p className="us-description">{report.description}</p>
                         </div>
                     </div>
+
+                    <div className="us-track">
+                        <p className="dx-label">Update Status</p>
+                        <div className="us-steps" role="radiogroup" aria-label="Update status">
+                            {STEPS.map((step) => (
+                                <label key={step.value} className="us-step">
+                                    <input type="radio" name="status" value={step.value} checked={status === step.value} onChange={(event) => setStatus(event.target.value)} />
+                                    <span className="us-node" aria-hidden="true"></span>
+                                    <span className="us-step-text">
+                                        <b>{step.value}</b>
+                                        <small>{step.hint}{report.status === step.value ? " (current)" : ""}</small>
+                                    </span>
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
                     <div className="update-status-actions">
-                        <button className="back-button" onClick={() =>navigate("/municipality")}>Cancel</button>
-                    <button className={`update-button${updating ? " is-loading" : ""}`} onClick={handleUpdateStatus} disabled={updating}>
-                        <ButtonLoader loading={updating} loadingText="Updating...">Update Status</ButtonLoader>
-                    </button>
+                        <button className="dx-btn plain" onClick={() =>navigate("/municipality")}>Cancel</button>
+                        <button className={`dx-btn update-button${updating ? " is-loading" : ""}`} onClick={handleUpdateStatus} disabled={updating}>
+                            <ButtonLoader loading={updating} loadingText="Updating...">Update Status</ButtonLoader>
+                        </button>
                     </div>
                 </div>
             </div>

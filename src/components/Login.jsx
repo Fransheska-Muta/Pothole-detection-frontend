@@ -27,7 +27,7 @@ function Login({ showSignup }) {
         const data = await response.json();
           if (response.ok) {
            login(data); 
-        alert("You're back! Let's keep an eye on the road")
+        // alert("You're back! Let's keep an eye on the road")
             setDriving(true) // the drive animation navigates to /user when it ends
             // console.log(data);              
         } else {

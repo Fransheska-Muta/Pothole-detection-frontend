@@ -2,13 +2,16 @@ import API_URL from "../config";
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/useAuth";
 import DashboardLayout from "../components/DashboardLayout";
-import "../styling/UserDashboard.css";
+import { SeverityBadge, StatusBadge } from "../components/Badges";
 import "../styling/Loader.css";
 import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
+import "../styling/UserDashboard.css";
 import { MapContainer, TileLayer, Marker, Popup, useMap} from "react-leaflet";
 import L from "leaflet"
-// import "@fortawesome/fontawesome-free/css/all.min.css";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
+import SearchIcon from "@mui/icons-material/Search";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 
 const defaultLocation = [-26.2041, 28.0473];
 
@@ -54,12 +57,22 @@ const potholeIcon = L.divIcon({
     popupAnchor: [0, -52]
 });
 
+const formatDistance = (km) => {
+    const value = Number(km);
+    if (value < 0.01) {
+        return { amount: "<10", unit: "m" };
+    }
+    if (value < 1) {
+        return { amount: Math.round(value * 1000), unit: "m" };
+    }
+    return { amount: value >= 100 ? Math.round(value) : value.toFixed(1), unit: "km" };
+};
+
 function UserDashboard() {
     const navigate = useNavigate()
-    const { user, logout } = useAuth()
+    const { user } = useAuth()
     const [location, setLocation] = useState("");
     const [coordinates, setCoordinates] = useState({latitude: null,longitude: null});
-    const [showProfile, setShowProfile] = useState(false);
     const [reports, setReports] = useState([])
     const [nearestPothole, setNearestPothole] = useState(null);
     const [suggestions, setSuggestions] = useState([]);
@@ -185,119 +198,122 @@ useEffect(() => {
     setShowSuggestions(false);
 }
 
+    // ---- display only ----
+    const hasLocation = coordinates.latitude !== null && coordinates.longitude !== null;
+    const isClose = nearestPothole ? Number(nearestPothole.distance) <= 1 : false;
+    const distanceLabel = nearestPothole ? formatDistance(nearestPothole.distance) : null;
+    const statusCounts = [
+        { key: "pending", label: "Pending", count: reports.filter((report) => report.status === "Pending").length },
+        { key: "in-progress", label: "In Progress", count: reports.filter((report) => report.status === "In Progress").length },
+        { key: "resolved", label: "Resolved", count: reports.filter((report) => report.status === "Resolved").length }
+    ];
+
     return (
         <DashboardLayout>
-            <div className="user-dashboard">
-                <div className="dashboard-top">
-             <div className="location-search">
+            <div className="dx-page ud-page">
+                <div className="dx-head">
+                    <div>
+                        <p className="dx-eyebrow">Live road map</p>
+                        <h1>Potholes near you</h1>
+                        <p className="dx-lede">Search an address or use your location to see what has been reported on the road ahead.</p>
+                    </div>
+                </div>
 
-            <button className={`location-button${locating ? " is-loading" : ""}`} onClick={getMyLocation} disabled={locating}>
-                {locating ? <span className="btn-spinner" aria-label="Finding your location"></span> : <img src="./location.png" alt="My location" />}
-            </button>
-
-            <div className="dashboard-location-input">
-                <input type="text" value={location} placeholder="Search location" onChange={handleLocationChange}/>
+                <div className="ud-search">
+                    <div className="dashboard-location-input">
+                        <SearchIcon className="ud-search-icon" />
+                        <input type="text" value={location} placeholder="Search location" aria-label="Search location" onChange={handleLocationChange}/>
+                    </div>
+                    <button className={`dx-btn plain ud-locate${locating ? " is-loading" : ""}`} onClick={getMyLocation} disabled={locating} aria-label="Use my location">
+                        {locating ? <span className="btn-spinner" aria-label="Finding your location"></span> : <MyLocationIcon fontSize="small" />}
+                        <span>Use my location</span>
+                    </button>
                     {showSuggestions && suggestions.length > 0 && (
                         <div className="dashboard-location-suggestions">
                             {suggestions.map((place, index) => (
                                 <div key={index} className="dashboard-location-suggestion" onClick={() => selectLocation(place)}>{place.name}</div>
                             ))}
-
                         </div>
                     )}
                 </div>
-            </div>
-            {/* <h1> Welcome</h1> */}
-                <div className="profile-avatar">
-                <img src="./profile.webp" onClick={() => setShowProfile(true)}/>
-            </div>
-                </div>
-                {showProfile && (
-                    <div className="profile-modal-overlay">
-                        <div className="profile-modal">
-                        <button className="profile-close" onClick={() => setShowProfile(false)}>x</button>
-                            <h2>My Profile</h2>
-                            <div className="profile-information">
-                                <div className="profile-avatar">
-                                    <img src="./profile.webp"/>
-                                </div>
 
-                                <div className="profile-field">
-                                    <label>Name</label>
-                                    <p>{user?.name || "Not available"}</p>
-                                </div>
-
-                                <div className="profile-field">
-                                    <label>Email</label>
-                                    <p>{user?.email || "Not available"}</p>
-                                </div>
-
-                                <div className="profile-field">
-                                    <label>Role</label>
-                                    <p>{user?.role || "Not available"}</p>
-                                </div>
-                                <button className="logout" onClick={logout}> Logout</button>
-                            </div>
-                            <button className="profile-done" onClick={() => setShowProfile(false)}>Close </button>
-                        </div>
+                <div className="ud-map-wrap">
+                    <div className="ud-map-frame">
+                        <MapContainer center={defaultLocation} zoom={12} className="user-map">
+                            <TileLayer attribution="&copy; OpenStreetMap contributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+                            <ChangeMapLocation coordinates={coordinates}/>
+                            {hasLocation && (
+                                <Marker position={[ coordinates.latitude, coordinates.longitude]} icon={userLocationIcon}>
+                                    <Popup><b>Selected Location</b></Popup>
+                                </Marker>
+                            )}
+                            {reports.map((report) => {
+                                if (!hasValidCoordinates(report)) {
+                                    return null
+                                }
+                                return (
+                                    <Marker key={report._id} position={[Number(report.latitude),Number(report.longitude)]} icon={potholeIcon}>
+                                        <Popup>
+                                            <div className="ud-popup">
+                                                <strong>{report.location}</strong>
+                                                <SeverityBadge value={report.severity} />
+                                                <StatusBadge value={report.status} />
+                                            </div>
+                                        </Popup>
+                                    </Marker>
+                                )
+                            })}
+                        </MapContainer>
                     </div>
-                )}
+                </div>
 
-                <div className="map-container">
-                    <MapContainer center={defaultLocation} zoom={12} className="user-map">
-                    <TileLayer attribution="&copy; OpenStreetMap contributors" url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
-                        <ChangeMapLocation coordinates={coordinates}/>
-                        {coordinates.latitude !== null && coordinates.longitude !== null && (
-                        <Marker position={[ coordinates.latitude, coordinates.longitude]}icon={userLocationIcon}>
-                        <Popup><b>Selected Location</b></Popup>
-                        </Marker>
-                    )}
-            {reports.map((report) => {
-            if (!hasValidCoordinates(report)) {
-                return null
-            }
-            return (
-                <Marker key={report._id} position={[Number(report.latitude),Number(report.longitude)]} icon={ potholeIcon }>
-                    <Popup>
-                        <p>Location:{report.location}</p>
-                        <p>Severity:{report.severity}</p>
-                        <p>Status:{report.status}</p>
-                    </Popup>
-                </Marker>
-            )
-         })}
-            </MapContainer>
+                <div className="ud-mapmeta">
+                    <div className="ud-legend" aria-hidden="true">
+                                <span><i className="key pin"></i>Pothole</span>
+                                <span><i className="key pin you"></i>You</span>
+                            </div>
+                    {hasLocation && (<p className="ud-coords">Latitude: {coordinates.latitude} &nbsp; Longitude: {coordinates.longitude}</p>)}
+                </div>
+
+                <div className="ud-block">
+                    <section className={`ud-cell ud-near${isClose && hasLocation ? " is-close" : ""}`}>
+                        <p className="ud-cell-label">Nearest pothole</p>
+                        {!hasLocation ? (
+                            <p className="ud-cell-text">Pick a place above or use your location, and the closest reported pothole will appear here.</p>
+                        ) : nearestPothole ? (
+                            <div className="ud-near-body">
+                                <p className="ud-distance"><b>{distanceLabel.amount}</b><span>{distanceLabel.unit} away</span></p>
+                                <div>
+                                    <p className="ud-near-place">{nearestPothole.location}</p>
+                                    <div className="ud-near-meta">
+                                        <SeverityBadge value={nearestPothole.severity} />
+                                        <StatusBadge value={nearestPothole.status} />
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <p className="ud-cell-text">No nearby potholes detected.</p>
+                        )}
+                    </section>
+
+                    <section className="ud-cell ud-counts-cell">
+                        <p className="ud-cell-label">On the map</p>
+                        <p className="ud-total"><b>{reports.length}</b> {reports.length === 1 ? "report" : "reports"}</p>
+                        <ul className="ud-counts">
+                            {statusCounts.map((item) => (
+                                <li key={item.key}><i className={`key ${item.key}`}></i>{item.label}<b>{item.count}</b></li>
+                            ))}
+                        </ul>
+                    </section>
+
+                    <section className="ud-cell ud-cta">
+                        <p className="ud-cell-label">Not on the map?</p>
+                        <p className="ud-cell-text">Spotted one that has not been reported yet?</p>
+                        <button className="dx-btn yellow block ud-report" onClick={handleReport}><PhotoCameraIcon fontSize="small" /> Report Pothole</button>
+                    </section>
+                </div>
             </div>
-                {coordinates.latitude !== null && (<p className="coordinates">Latitude: {coordinates.latitude} Longitude: {coordinates.longitude}</p>)}
-                
-            <div className="detection-section">
-            <div className="location-button"><img src="./warning.jpg"/></div>
-
-         <div className="detection-message">
-         {nearestPothole ? (
-            <>
-                <strong>Nearby Pothole Alert</strong>
-                <br />
-                Location: {nearestPothole.location}
-                <br />
-                Severity: {nearestPothole.severity}
-                <br />
-                Distance: {nearestPothole.distance} km away
-                <br />
-                Status: {nearestPothole.status}
-            </>
-         ) : (
-            "No nearby potholes detected."
-         )}
-         </div>
-         </div>
-
-         <div className="report-section">
-         {/* <div className="location-button"><img src="camera.webp"/></div> */}
-            <button className="report-pothole-button" onClick={handleReport}>Report Pothole</button>
-            </div>
-         </div >
-        </DashboardLayout >
+        </DashboardLayout>
     )
 }
 export default UserDashboard

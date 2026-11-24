@@ -1,6 +1,6 @@
 /* ===== SPDMS road theme =====
-   Loaded last (see main.jsx). Colours and small refinements shared by every page:
-   asphalt + safety-yellow accents on top of the existing purple brand colour. */
+   Loaded last (see main.jsx). Shared colour + font tokens, the roadworks tape on
+   dashboard pages, and the 404 page. Dashboard components live in DashboardShared.css. */
 
 :root {
     --asphalt-900: #0f1118;
@@ -13,6 +13,19 @@
     --brand-deep: #5d1578;
     --brand-darker: #4f0f74;
     --paper: #f7f5f0;
+
+    /* dashboards */
+    --ink: #171a23;
+    --ink-soft: #5a5f6e;
+    --kerb: #d9d5ca;
+    --paper-2: #efece4;
+    --card: #fffdf8;
+    --sev-small: #2e9e5b;
+    --sev-medium: #f0b400;
+    --sev-large: #d93025;
+    --font-ui: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-display: "Zilla Slab", Georgia, "Times New Roman", serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 }
 
 body {
@@ -28,17 +41,28 @@ textarea {
     font-family: inherit;
 }
 
-/* ---- every dashboard page: roadworks tape along the top edge ---- */
+/* Login, signup and the drive animation used to pick up "Poppins, sans-serif" from a
+   global rule in the old admin stylesheet. Pinned here so they look exactly as before. */
+.login-container,
+.login-container *,
+.signup-container,
+.signup-container *,
+.drive-overlay,
+.drive-overlay * {
+    font-family: Poppins, sans-serif;
+}
+
+/* ---- every dashboard page: a painted centre line along the top edge ---- */
 main::before {
     content: "";
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    height: 8px;
+    height: 6px;
     z-index: 1150;
     pointer-events: none;
-    background: repeating-linear-gradient(-45deg, var(--line-yellow) 0 14px, var(--asphalt-800) 14px 28px);
+    background: repeating-linear-gradient(90deg, var(--line-yellow) 0 26px, var(--asphalt-800) 26px 44px);
 }
 
 /* ---- arriving from the drive animation: fade in from dark ---- */
@@ -56,89 +80,6 @@ body.arriving main::after {
     from { opacity: 1; visibility: visible; }
     99% { visibility: visible; }
     to { opacity: 0; visibility: hidden; }
-}
-
-/* ---- buttons: same layout as before, a bit more "road sign" ---- */
-.report-pothole-button {
-    background-color: var(--line-yellow);
-    color: var(--asphalt-900);
-    border: 3px solid var(--asphalt-900);
-    box-shadow: 0 5px 0 var(--asphalt-900);
-    transition: transform 0.12s, box-shadow 0.12s, background-color 0.2s;
-}
-
-.report-pothole-button:hover {
-    background-color: #ffd65c;
-}
-
-.report-pothole-button:active {
-    transform: translateY(4px);
-    box-shadow: 0 1px 0 var(--asphalt-900);
-}
-
-.submit-report,
-.update-button {
-    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
-    box-shadow: 0 4px 0 #3b0d4d;
-    transition: transform 0.12s, box-shadow 0.12s, filter 0.2s;
-}
-
-.submit-report:hover:not(:disabled),
-.update-button:hover:not(:disabled) {
-    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-deep) 100%);
-    filter: brightness(1.12);
-}
-
-.submit-report:active:not(:disabled),
-.update-button:active:not(:disabled) {
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 #3b0d4d;
-}
-
-.submit-report:disabled,
-.update-button:disabled,
-.demote-button:disabled,
-.superadmin-container .modal button:disabled {
-    filter: saturate(0.75);
-}
-
-.location-button {
-    color: var(--brand);
-}
-
-.location-button .btn-spinner {
-    width: 24px;
-    height: 24px;
-}
-
-/* ---- page headings get a dashed centre-line underline ---- */
-.reports-header h1::after,
-.superadmin-container h1::after {
-    content: "";
-    display: block;
-    width: 90px;
-    height: 5px;
-    margin-top: 8px;
-    background: repeating-linear-gradient(90deg, var(--line-yellow) 0 16px, transparent 16px 24px);
-    border-radius: 3px;
-}
-
-.superadmin-container h1::after {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* ---- municipality table: asphalt header ---- */
-.reports-table th {
-    background: var(--asphalt-800);
-    color: var(--line-yellow);
-}
-
-/* ---- cards and modals ---- */
-.profile-modal,
-.report-details-modal,
-.update-status-card {
-    border-top: 6px solid var(--line-yellow);
 }
 
 /* ---- 404: a road that keeps running ---- */

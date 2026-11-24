@@ -1,243 +1,124 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Poppins, sans-serif;
+/* ===== Super admin: roster + promote ===== */
+
+.sa-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 14px;
 }
 
-.superadmin-container {
-    min-height: 100vh;
-    background: white;
-    padding: 30px 50px;
-}
+.sa-toolbar h2 { font: 700 28px/1 var(--font-display); }
 
-/* title */
-.superadmin-container h1 {
-    /* border: 2px solid red; */
-    color: black;
-    font-size: 35px;
-    text-align: center;    
-}
-
-.superadmin-container p {
-    /* border: 2px solid red; */
-    color: #030303;
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 22px;
-}
-
-.demote-button {
-    background-color: #7016A3;;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-/* logout button*/
-.superadmin-container > button {
-    background: #7016A3;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 10px 25px;
-    font-size: 15px;
-    cursor: pointer;
-    float: right;
-    margin-top: -65px;
-}
-
-.superadmin-container button:hover {
-    background: #4f0f74;
-}
-
-.superadmin-container h2 {
-    color: black;
-    font-size: 25px;
-    margin-bottom: 15px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-}
-
-thead {
-    background: #7016A3;
-    color: white;
-}
-
-th {
-    padding: 15px;
-    text-align: left;
-    font-size: 16px;
-}
-
-td {
-    padding: 15px;
-    border-bottom: 1px solid #ddd;
-    color: #333;
-}
-
-tbody tr:hover {
-    background: #f3eafa;
-}
-
-tbody tr:last-child td {
-    border-bottom: none;
-}
-
-td:last-child {
-    font-weight: bold;
-    color: #7016A3;
-}
-
-/* The modal part (button)*/
-.add-button {
-    /* border: 2px solid red; */
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    width: 60px;
-    height: 60px;
-    /* border: none; */
-    border-radius: 50%;
-    background: #7016A3;
-    color: white;
-    font-size: 32px;
-    cursor: pointer;
+.sa-search {
     display: flex;
     align-items: center;
-    justify-content: center;
-    /* z-index: 100; */
+    gap: 10px;
+    width: min(340px, 100%);
+    height: 42px;
+    padding: 0 4px;
+    border-bottom: 2px solid var(--asphalt-800);
+    color: var(--ink-soft);
 }
 
-.add-button:hover {
-    background: #4f0f74;
-}
+.sa-search:focus-within { border-bottom-color: var(--brand); }
 
-/* the modal (popup) part */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+.sa-search input {
+    flex: 1;
+    min-width: 0;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* z-index: 1000; */
-}
-
-.modal {
-    width: 420px;
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-}
-
-.modal h2 {
-    color: #5D1578;
-    margin-bottom: 10px;
-}
-
-.modal p {
-    color: #666;
-    margin-bottom: 25px;
-}
-
-.modal label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 6px;
-    font-weight: bold;
-}
-
-.modal input, .modal select {
-    width: 100%;
-    height: 45px;
-    border: 2px solid #ddd;
-    border-radius: 25px;
-    padding: 0 15px;
-    font-size: 15px;
-    outline: none;
-}
-
-.modal input:focus,.modal select:focus {
-    border-color: #7016A3;
-}
-
-.modal button {
-    margin-top: 25px;
-    height: 45px;
     border: none;
-    border-radius: 25px;
-    padding: 0 25px;
-    background: #7016A3;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
+    outline: none !important;
+    background: transparent;
+    font-size: 16px;
+    color: var(--ink);
 }
 
-.modal button:hover {
-    background: #4f0f74;
+.sa-table { width: 100%; border-collapse: collapse; }
+
+.sa-table thead th {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--asphalt-800);
+    background: var(--paper-2);
+    font: 500 11.5px var(--font-mono);
+    letter-spacing: 0.14em;
+    text-align: left;
+    text-transform: uppercase;
+    color: var(--ink-soft);
 }
 
-.modal button + button {
-    margin-left: 10px;
-    background: #777;
+.sa-table td { padding: 14px 18px; border-bottom: 1px solid var(--kerb); vertical-align: middle; font-size: 15px; }
+.sa-table tbody tr { transition: background-color 0.12s; }
+.sa-table tbody tr:hover { background: #fff6d2; }
+.sa-table tbody tr:last-child td { border-bottom: none; }
+
+.c-name { font-weight: 600; }
+.c-name .person { display: flex; align-items: center; gap: 14px; }
+.c-name .dx-mono-box { width: 38px; height: 38px; font-size: 15px; }
+.c-email { font: 400 14px var(--font-mono); color: #3d4150; overflow-wrap: anywhere; }
+
+.sa-role.municipality { background: var(--line-yellow); border-color: var(--asphalt-800); color: var(--asphalt-900); }
+.sa-role.superAdmin { background: var(--asphalt-800); border-color: var(--asphalt-800); color: var(--line-yellow); }
+
+/* ---- promote ---- */
+.sa-modal h2 { margin-top: 4px; }
+.sa-modal-text { margin: 8px 0 20px !important; color: var(--ink-soft); }
+
+.sa-roles { margin: 22px 0 0; padding: 0; border: none; display: grid; }
+.sa-roles legend { margin-bottom: 6px; padding: 0; }
+
+.sa-role-option { position: relative; display: block; cursor: pointer; border-bottom: 1px solid var(--kerb); }
+.sa-role-option:first-of-type { border-top: 1px solid var(--kerb); }
+.sa-role-option input { position: absolute; opacity: 0; inset: 0; }
+
+.sa-role-text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 12px 8px 12px 38px;
+    transition: background-color 0.12s;
 }
 
-.modal button + button:hover {
-    background: #555;
+.sa-role-text::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    margin-top: -8px;
+    border: 1.5px solid var(--asphalt-600);
+    border-radius: 50%;
+    background: #fffdf8;
 }
 
-@media screen and (max-width: 768px) {
-    .superadmin-container {
-        padding: 25px 20px;
-    }
-    .superadmin-container h1 {
-        font-size: 28px;
-    }
-    .superadmin-container > button {
-        float: none;
-        margin-top: 0;
-        margin-bottom: 25px;
-    }
-    table {
-        font-size: 14px;
-    }
-    th, td {
-        padding: 10px;
-    }
-}
+.sa-role-text b { font-weight: 600; }
+.sa-role-text small { font-size: 13px; color: var(--ink-soft); }
+.sa-role-option:hover .sa-role-text { background: rgba(23, 26, 35, 0.04); }
+.sa-role-option input:checked + .sa-role-text { background: #fff6d2; }
+.sa-role-option input:checked + .sa-role-text::before { border-color: var(--asphalt-800); background: radial-gradient(circle, var(--asphalt-800) 0 4px, #fffdf8 5px); }
+.sa-role-option input:focus-visible + .sa-role-text { outline: 2px solid var(--brand); outline-offset: -2px; }
 
-@media screen and (max-width: 480px) {
-    .superadmin-container {
-        padding: 20px 15px;
+@media (max-width: 760px) {
+    .sa-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .sa-table, .sa-table tbody { display: block; }
+
+    .sa-table tbody tr {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas: "name name" "email email" "role action";
+        align-items: center;
+        gap: 8px 12px;
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--kerb);
     }
-    .superadmin-container h1 {
-        font-size: 24px;
-    }
-    .superadmin-container p {
-        font-size: 14px;
-    }
-    .superadmin-container h2 {
-        font-size: 20px;
-    }
-    table {
-        font-size: 12px;
-    }
-    th, td {
-        padding: 8px;
-    }
+
+    .sa-table tbody tr:last-child { border-bottom: none; }
+    .sa-table td { display: block; padding: 0; border: 0; }
+    .sa-table .c-name { grid-area: name; }
+    .sa-table .c-email { grid-area: email; font-size: 13px; }
+    .sa-table .c-role { grid-area: role; }
+    .sa-table .c-action { grid-area: action; }
 }

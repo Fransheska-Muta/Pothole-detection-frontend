@@ -4,6 +4,8 @@ import ButtonLoader from "../components/ButtonLoader";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
 import DashboardLayout from "../components/DashboardLayout";
+import PlaceIcon from "@mui/icons-material/Place";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import "../styling/Report.css";
 
 function Report() {
@@ -145,14 +147,21 @@ const selectLocation = (place) => {
 
     return (
         <DashboardLayout>
-            <div className="report-page">
-              <h1>Report</h1>
+            <div className="dx-page report-page">
+              <div className="dx-head">
+                <div>
+                  <p className="dx-eyebrow">New report</p>
+                  <h1>Report a pothole</h1>
+                  <p className="dx-lede">Tell us where it is, add a photo and how bad it looks. The municipality takes it from there.</p>
+                </div>
+              </div>
+
               <form className="report-form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Location:</label>
+                <div className="form-group rp-location">
+                    <label htmlFor="report-location"><span className="rp-num">01</span>Location</label>
                     <div className="location-input">
-                        <span className="location-icon"><img src="./location.png"/></span>
-                        <input type="text" value={location} onChange={ handleLocationChange  }placeholder="Enter Location"/>
+                        <span className="location-icon"><PlaceIcon fontSize="small" /></span>
+                        <input id="report-location" type="text" value={location} onChange={ handleLocationChange  }placeholder="Enter Location" autoComplete="off"/>
                         {showSuggestions && suggestions.length > 0 && (
                         <div className="location-suggestions">
                             {suggestions.map((place, index) => (
@@ -162,53 +171,57 @@ const selectLocation = (place) => {
                         </div>
                     )}
                     </div>
+                </div>
 
+                <div className="form-group rp-photo">
+                    <span className="rp-label"><span className="rp-num">02</span>Upload Image</span>
+                    <div className="image-upload">
+                    {image ? (
+                    <img src={URL.createObjectURL(image)} alt="Pothole preview"/>
+                    ) : (
+                    <label htmlFor="image-input" className="image-placeholder">
+                        <PhotoCameraIcon fontSize="large" />
+                        <strong>Upload pothole image</strong>
+                        <span>Tap to take a photo or choose one</span>
+                    </label>
+                    )}
+                    <label htmlFor="image-input" className="camera-button"><PhotoCameraIcon fontSize="small" /> {image ? "Change photo" : "Add photo"}</label>
+                    <input id="image-input" type="file" accept="image/*" onChange={handleImageChange} hidden/>
                     </div>
+                </div>
 
-                    <div className="form-group">
-                        <label>Upload Image</label>
-                        <div className="image-upload">
-                        {image ? (
-                        <img src={URL.createObjectURL(image)} alt="Pothole preview"/>
-                        ) : (
-                        <div className="image-placeholder">Upload pothole image</div>
-                        )}
-                        <label htmlFor="image-input" className="camera-button"><img src="./camera.webp"/></label>
-                        <input id="image-input" type="file" accept="image/*" onChange={handleImageChange} hidden/>
-                        </div>
+                <div className="form-group rp-description">
+                    <label htmlFor="report-description"><span className="rp-num">03</span>Description</label>
+                    <textarea id="report-description" value={description} onChange={(event) =>setDescription(event.target.value)}placeholder="Describe the pothole..."/>
+                </div>
+
+                <div className="severity-section">
+                    <span className="rp-label"><span className="rp-num">04</span>Pothole size (severity)</span>
+                    <div className="severity-options">
+                    <label className="severity-option">
+                    <input type="radio" name="severity" value="Small" checked={severity === "Small"} onChange={(event) =>setSeverity(event.target.value)}/>
+                    <span className="severity-circle small"></span>
+                    <span className="severity-text"><b>Small</b><small>Minor, easy to miss</small></span>
+                    </label>
+
+                    <label className="severity-option">
+                        <input type="radio" name="severity" value="Medium" checked={severity === "Medium"} onChange={(event) =>setSeverity(event.target.value)}/>
+                        <span className="severity-circle medium"></span>
+                        <span className="severity-text"><b>Medium</b><small>Noticeable, slows cars down</small></span>
+                    </label>
+
+                    <label className="severity-option">
+                        <input type="radio" name="severity" value="Large" checked={severity === "Large"} onChange={(event) =>setSeverity(event.target.value)}/>
+                        <span className="severity-circle large"></span>
+                        <span className="severity-text"><b>Large</b><small>Serious, a real danger</small></span>
+                    </label>
                     </div>
+                </div>
 
-                    <div className="form-group">
-                        <label>Description:</label>
-                        <textarea value={description} onChange={(event) =>setDescription(event.target.value)}placeholder="Describe the pothole..."/>
-                    </div>
-
-                    <div className="severity-section">
-                        <label>Pothole size (severity):</label>
-                        <label className="severity-option">
-                        <input type="radio" name="severity" value="Small" checked={severity === "Small"} onChange={(event) =>setSeverity(event.target.value)}/>
-                        <span className="severity-circle small"></span>
-                        <span>Small</span>
-                        </label>
-
-                        <label className="severity-option">
-                            <input type="radio" name="severity" value="Medium" checked={severity === "Medium"} onChange={(event) =>setSeverity(event.target.value)}/>
-                            <span className="severity-circle medium"></span>
-                            <span>Medium</span>
-                        </label>
-
-                        <label className="severity-option">
-
-                            <input type="radio" name="severity" value="Large" checked={severity === "Large"} onChange={(event) =>setSeverity(event.target.value)}/>
-                            <span className="severity-circle large"></span>
-                            <span> Large</span>
-                        </label>
-                    </div>
-
-                    <button type="submit" className={`submit-report${submitting ? " is-loading" : ""}`} disabled={submitting}>
-                        <ButtonLoader loading={submitting} loadingText="Submitting...">Submit</ButtonLoader>
-                    </button>
-                </form>
+                <button type="submit" className={`dx-btn submit-report${submitting ? " is-loading" : ""}`} disabled={submitting}>
+                    <ButtonLoader loading={submitting} loadingText="Submitting...">Submit</ButtonLoader>
+                </button>
+              </form>
             </div>
         </DashboardLayout>
     )
