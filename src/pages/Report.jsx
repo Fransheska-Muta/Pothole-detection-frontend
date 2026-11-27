@@ -1,5 +1,5 @@
 import API_URL from "../config";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ButtonLoader from "../components/ButtonLoader";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/useAuth";
@@ -18,8 +18,11 @@ function Report() {
     const [submitting, setSubmitting] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const searchTimer = useRef(null);
+    const searchId = useRef(0);
     const [selectedCoordinates, setSelectedCoordinates] = useState({latitude: null,longitude: null})
 
+    useEffect(() => () => clearTimeout(searchTimer.current), []);
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0];
         if (selectedImage) {
@@ -101,36 +104,47 @@ const handleSubmit = async (event) => {
     }
 }
     
-    const handleLocationChange = async (event) => {
+// Suggestions come from OpenStreetMap, which only allows about one request per second. So we wait until the person stops typing before asking, and ignore
+    const handleLocationChange = (event) => {
     const value = event.target.value;
     setLocation(value);
+    clearTimeout(searchTimer.current);
 
     if (value.trim().length < 3) {
+        searchId.current += 1;
         setSuggestions([]);
         setShowSuggestions(false);
         return
     }
 
-    try {
-    const response = await fetch(`${API_URL}/geocode/suggestions?address=${encodeURIComponent(value)}`,{
-        headers: {Authorization: `Bearer ${user?.token}`}}
-    )
-        const data = await response.json();
-
-        if (!response.ok) {
-            console.error(data.message);
-            return
+    searchTimer.current = setTimeout(async () => {
+        const thisSearch = ++searchId.current;
+        try {
+            const response = await fetch(`${API_URL}/geocode/suggestions?address=${encodeURIComponent(value)}`,{
+                headers: {Authorization: `Bearer ${user?.token}`}
+            });
+            const data = await response.json();
+            if (thisSearch !== searchId.current) {
+                return          // a newer search started, or a place was chosen
+            }
+            if (!response.ok) {
+                console.error(data.message);
+                setSuggestions([]);
+                return
+            }
+            setSuggestions(data);
+            setShowSuggestions(true);
+        } catch (error) {
+            console.error("Error getting location suggestions:",error)
         }
-        setSuggestions(data);
-        setShowSuggestions(true);
-       console.log("Suggestions received:", data);
-    } catch (error) {
-      console.error("Error getting location suggestions:",error)
-    }
+    }, 700);
 }
 
+ 
 const selectLocation = (place) => {
     setLocation(place.name);
+    clearTimeout(searchTimer.current);
+    searchId.current += 1;
     setSelectedCoordinates({
         latitude: place.latitude,
         longitude: place.longitude

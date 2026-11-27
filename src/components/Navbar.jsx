@@ -4,17 +4,11 @@ import { useAuth } from "../context/useAuth";
 import { initialsOf, roleLabel } from "../utils/ui";
 import "../styling/Navbar.css";
 
-// The same menu is used twice: a fixed rail on wide screens, a drawer on small ones.
 function NavContent({ closeNavbar, onProfile }) {
     const { user } = useAuth();
     const isMunicipality = user?.role === "municipality";
     const isSuperAdmin = user?.role === "superAdmin";
-    const links = [
-        { to: "/user", label: "Home" },
-        { to: "/report", label: "Report" },
-        ...(isMunicipality || isSuperAdmin ? [{ to: "/municipality", label: "View Reports" }] : []),
-        ...(isSuperAdmin ? [{ to: "/superadmin", label: "Admin" }] : [])
-    ];
+    const links = [{ to: "/user", label: "Home" },{ to: "/report", label: "Report" },{ to: "/my-reports", label: "My Reports" },...(isMunicipality || isSuperAdmin ? [{ to: "/municipality", label: "View Reports" }] : []),...(isSuperAdmin ? [{ to: "/superadmin", label: "Admin" }] : [])]
     return (
         <div className="rail-inner">
             <div className="rail-brand">
@@ -43,7 +37,7 @@ function NavContent({ closeNavbar, onProfile }) {
                 </span>
             </button>
         </div>
-    );
+    )
 }
 
 function Navbar({ isOpen, setIsOpen, onProfile }) {

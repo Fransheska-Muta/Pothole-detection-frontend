@@ -1,5 +1,5 @@
 import API_URL from "../config";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../context/useAuth";
 import DashboardLayout from "../components/DashboardLayout";
 import { SeverityBadge, StatusBadge } from "../components/Badges";
@@ -78,6 +78,9 @@ function UserDashboard() {
     const [suggestions, setSuggestions] = useState([]);
     const [locating, setLocating] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const searchTimer = useRef(null);
+    const searchId = useRef(0);
+    useEffect(() => () => clearTimeout(searchTimer.current), []);
 
     // calculates teh distance betwen current position and nearest pothole
     const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -158,37 +161,47 @@ useEffect(() => {
     const handleReport = () => {
     navigate("/report");
 }
-    const handleLocationChange = async (event) => {
+// Suggestions come from OpenStreetMap, which only allows about one request per
+// second. So we wait until the person stops typing before asking, and ignore
+// answers that arrive after a newer search or after they picked a place.
+const handleLocationChange = (event) => {
     const value = event.target.value;
     setLocation(value);
-    // it only starts seaches when theres 3 values
+    clearTimeout(searchTimer.current);
+
     if (value.trim().length < 3) {
+        searchId.current += 1;
         setSuggestions([]);
         setShowSuggestions(false);
         return
     }
 
-    try {
-        const response = await fetch(`${API_URL}/geocode/suggestions?address=${encodeURIComponent(value)}`,{
-        headers: {Authorization: `Bearer ${user.token}`}
-        })
-        const data = await response.json();
-        if (!response.ok) {
-            console.error(data.message);
-            setSuggestions([]);
-            return
+    searchTimer.current = setTimeout(async () => {
+        const thisSearch = ++searchId.current;
+        try {
+            const response = await fetch(`${API_URL}/geocode/suggestions?address=${encodeURIComponent(value)}`,{
+                headers: {Authorization: `Bearer ${user?.token}`}
+            });
+            const data = await response.json();
+            if (thisSearch !== searchId.current) {
+                return          // a newer search started, or a place was chosen
+            }
+            if (!response.ok) {
+                console.error(data.message);
+                setSuggestions([]);
+                return
+            }
+            setSuggestions(data);
+            setShowSuggestions(true);
+        } catch (error) {
+            console.error("Error getting location suggestions:",error)
         }
-
-        setSuggestions(data);
-        setShowSuggestions(true);
-
-    } catch (error) {
-        console.error("Error getting location suggestions:",error)
-    }
+    }, 700);
 }
     const selectLocation = (place) => {
-    // show the selected address in the input
     setLocation(place.name);
+    clearTimeout(searchTimer.current);
+    searchId.current += 1;
     // moving the map to the selected location
     setCoordinates({
         latitude: Number(place.latitude),

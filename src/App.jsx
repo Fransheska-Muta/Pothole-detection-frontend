@@ -8,6 +8,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Report from "./pages/Report"
 import UpdateStatus from "./pages/UpdateStatus"
 // import UpdateStatus from "./pages/UpdateStatus"
+import MyReports from "./pages/MyReports"
 
 function App() {
   return (
@@ -41,6 +42,12 @@ function App() {
           <UpdateStatus />
         </ProtectedRoute>
         }/>
+    
+       <Route path="/my-reports" element={
+        <ProtectedRoute roles={["user","municipality", "superAdmin"]}>
+          <MyReports />
+        </ProtectedRoute>
+}/>    
 
       </Routes>
     </BrowserRouter>
